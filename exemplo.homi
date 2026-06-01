@@ -1,0 +1,14 @@
+AUTOMACAO "Por do sol na Sala"
+
+GATILHO:
+    QUANDO sunset -01:30:00
+
+CONDICAO:
+    SE alarm_control_panel.alarmo ESTA "disarmed"
+    SE light.sala ESTA "off"
+
+ACAO:
+    LIGAR light.sala
+    ESPERAR 5min
+    DESLIGAR light.sala
+FIM
