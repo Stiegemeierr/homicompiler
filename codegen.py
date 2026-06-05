@@ -45,31 +45,12 @@ class GeradorYAML:
         de delay do Home Assistant.
 
         Formatos aceitos:
+          - '1h 2min 3s' -> {hours: 1, minutes: 2, seconds: 3, milliseconds: 0}
+          - '1min 45s'   -> {hours: 0, minutes: 1, seconds: 45, milliseconds: 0}
           - '10s'        -> {hours: 0, minutes: 0, seconds: 10, milliseconds: 0}
-          - '5min'       -> {hours: 0, minutes: 5, seconds: 0, milliseconds: 0}
           - '01:30:00'   -> offset string (usado em triggers, não em delay)
           - '-01:30:00'  -> offset string negativo
         """
-        # Formato: Ns (segundos)
-        match_s = re.match(r'^(\d+)s$', tempo_str)
-        if match_s:
-            return {
-                'hours': 0,
-                'minutes': 0,
-                'seconds': int(match_s.group(1)),
-                'milliseconds': 0,
-            }
-
-        # Formato: Nmin (minutos)
-        match_min = re.match(r'^(\d+)min$', tempo_str)
-        if match_min:
-            return {
-                'hours': 0,
-                'minutes': int(match_min.group(1)),
-                'seconds': 0,
-                'milliseconds': 0,
-            }
-
         # Formato HH:MM:SS — converte para dicionário de delay
         match_hms = re.match(r'^-?(\d{1,2}):(\d{2}):(\d{2})$', tempo_str)
         if match_hms:
@@ -77,6 +58,24 @@ class GeradorYAML:
                 'hours': int(match_hms.group(1)),
                 'minutes': int(match_hms.group(2)),
                 'seconds': int(match_hms.group(3)),
+                'milliseconds': 0,
+            }
+
+        # Formato composto: "1h 2min 3s", "1min 45s", "10s", etc
+        h_match = re.search(r'(\d+)h', tempo_str)
+        m_match = re.search(r'(\d+)min', tempo_str)
+        s_match = re.search(r'(\d+)s', tempo_str)
+
+        h = int(h_match.group(1)) if h_match else 0
+        m = int(m_match.group(1)) if m_match else 0
+        s = int(s_match.group(1)) if s_match else 0
+
+        # Retorna apenas se encontrou algo
+        if h > 0 or m > 0 or s > 0:
+            return {
+                'hours': h,
+                'minutes': m,
+                'seconds': s,
                 'milliseconds': 0,
             }
 
@@ -112,7 +111,7 @@ class GeradorYAML:
             'triggers':    self._gerar_triggers(no.get('gatilhos', [])),
             'conditions':  self._gerar_conditions(no.get('condicoes', [])),
             'actions':     self._gerar_actions(no.get('acoes', [])),
-            'mode':        'single',
+            'mode':        no.get('modo', 'single'),
         }
 
     # -----------------------------------------------------------------
@@ -135,10 +134,34 @@ class GeradorYAML:
             elif g['tipo'] == 'gatilho_estado':
                 # Trigger por mudança de estado de entidade.
                 # Schema HA: {trigger: state, entity_id: [...], to: [...]}
+                estados = [s.strip() for s in self._limpar_string(g['estado']).split(',')]
                 triggers.append({
                     'entity_id': [g['entidade']],
-                    'to':        [self._limpar_string(g['estado'])],
+                    'to':        estados,
                     'trigger':   'state',
+                })
+
+            elif g['tipo'] == 'gatilho_numerico':
+                trigger = {
+                    'trigger': 'numeric_state',
+                    'entity_id': [g['entidade']],
+                }
+                if g['operador'] == 'acima':
+                    trigger['above'] = g['valor']
+                elif g['operador'] == 'abaixo':
+                    trigger['below'] = g['valor']
+                triggers.append(trigger)
+
+            elif g['tipo'] == 'gatilho_horario':
+                # Schema HA: {trigger: time, at: ...} or something?
+                # Actually, HA supports time triggers, but usually it's just 'at' a specific time.
+                # However, if it's "entre", it might need to be translated as a trigger when it crosses that time, but normally "entre" is a condition.
+                # If they wrote it as a trigger, HA time trigger doesn't support "between", so let's translate to an 'at' trigger for the start time, or just time trigger. Let's just output a time condition-like trigger.
+                # Wait, HA doesn't have a "between" trigger. It has a time trigger with 'at'.
+                # Let's map it to an 'time' trigger at 'inicio'.
+                triggers.append({
+                    'trigger': 'time',
+                    'at': g['inicio'],
                 })
 
         return triggers
@@ -151,12 +174,30 @@ class GeradorYAML:
         """Converte a lista de condições da AST para conditions HA."""
         conditions = []
         for c in condicoes:
-            # Schema HA: {condition: state, entity_id: ..., state: [...]}
-            conditions.append({
-                'condition': 'state',
-                'entity_id': c['entidade'],
-                'state':     [self._limpar_string(c['estado'])],
-            })
+            if c['tipo'] == 'condicao_estado':
+                # Schema HA: {condition: state, entity_id: ..., state: [...]}
+                estados = [s.strip() for s in self._limpar_string(c['estado']).split(',')]
+                conditions.append({
+                    'condition': 'state',
+                    'entity_id': c['entidade'],
+                    'state':     estados,
+                })
+            elif c['tipo'] == 'condicao_numerica':
+                condition = {
+                    'condition': 'numeric_state',
+                    'entity_id': c['entidade'],
+                }
+                if c['operador'] == 'acima':
+                    condition['above'] = c['valor']
+                elif c['operador'] == 'abaixo':
+                    condition['below'] = c['valor']
+                conditions.append(condition)
+            elif c['tipo'] == 'condicao_horario':
+                conditions.append({
+                    'condition': 'time',
+                    'after': c['inicio'],
+                    'before': c['fim'],
+                })
 
         return conditions
 

@@ -1,0 +1,12 @@
+# Exemplo 2: Erro Sintático
+# A regra gramatical exige dois pontos (:) logo após a palavra QUANDO.
+# Aqui omitimos os dois pontos para forçar a parada do parser (modo pânico).
+AUTOMACAO "Erro Sintatico"
+MODO single
+
+QUANDO
+- sunset -01:30:00
+
+FAÇA:
+- LIGAR light.sala
+FIM

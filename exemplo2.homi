@@ -1,0 +1,19 @@
+AUTOMACAO "Corda Corredor - movimento"
+MODO restart
+
+QUANDO:
+- binary_sensor.corredor_suite_luminance_motion_sensor_movimento ESTA "on"
+- binary_sensor.tz3000_6ygjfyll_ts0202 ESTA "on"
+- binary_sensor.motion_sensor_movimento ESTA "on"
+
+SE:
+- switch.bb97c45f407329aca067d3f274499a81 ESTA "on"
+- alarm_control_panel.37dc24654a788314bfb4de2e2c827fd0 ESTA "disarmed"
+- light.corda_led_corredor ESTA "off"
+- HORARIO ENTRE 12:00:00 E 01:15:00
+
+FAÇA:
+- LIGAR light.a4595b3013d5c452494f933e1e104129
+- ESPERAR 1min 45s
+- DESLIGAR light.a4595b3013d5c452494f933e1e104129
+FIM

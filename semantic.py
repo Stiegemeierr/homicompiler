@@ -97,14 +97,15 @@ class AnalisadorSemantico:
 
     def _visitar_gatilho(self, no: dict, automacao_nome: str):
         """Registra entidades encontradas em gatilhos."""
-        if no['tipo'] == 'gatilho_estado':
+        if no['tipo'] in ('gatilho_estado', 'gatilho_numerico'):
             self._registrar_entidade(no['entidade'])
 
         # gatilho_evento não tem entidade, nada a registrar.
 
     def _visitar_condicao(self, no: dict, automacao_nome: str):
         """Registra entidades encontradas em condições."""
-        self._registrar_entidade(no['entidade'])
+        if no['tipo'] in ('condicao_estado', 'condicao_numerica'):
+            self._registrar_entidade(no['entidade'])
 
     def _visitar_acao(self, no: dict, automacao_nome: str):
         """

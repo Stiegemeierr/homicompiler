@@ -21,17 +21,26 @@ def compilar(codigo_fonte: str, arquivo_saida: str) -> bool:
     # ---- FASE 1 & 2: Analise Lexica + Sintatica (Parser chama o Lexer) ----
     print("[1/4] Analise Lexica + Sintatica...")
 
-    # Reseta o contador de linhas do lexer antes de cada parse.
+    # Reseta o contador de linhas e flags antes de cada parse.
     lexer.lineno = 1
+    lexer.lex_error = False
+    parser.sintax_error = False
 
     ast = parser.parse(codigo_fonte, lexer=lexer)
+    sucesso = True
+
+    if getattr(lexer, 'lex_error', False):
+        sucesso = False
+
+    if getattr(parser, 'sintax_error', False):
+        sucesso = False
 
     if ast is None:
-        print("[ERRO FATAL] Falha na analise sintatica. AST nao gerada.")
-        print("Compilacao abortada.")
-        return False
-
-    print(f"      -> {len(ast)} automacao(oes) encontrada(s).")
+        sucesso = False
+        print("[ERRO FATAL] Falha critica na analise sintatica. AST nao gerada.")
+        ast = []  # Permite que o analisador semantico rode vazio sem quebrar
+    else:
+        print(f"      -> {len(ast)} automacao(oes) encontrada(s).")
 
     # ---- FASE 3: Analise Semantica ----
     print("[2/4] Analise Semantica...")
@@ -43,14 +52,19 @@ def compilar(codigo_fonte: str, arquivo_saida: str) -> bool:
     analisador.imprimir_tabela_simbolos()
 
     if not sem_erros:
+        sucesso = False
         print()
         analisador.imprimir_relatorio()
         print()
-        print("[ERRO FATAL] Erros semanticos encontrados.")
-        print("Compilacao abortada. Corrija os erros acima e tente novamente.")
-        return False
+        print("[ERRO] Erros semanticos encontrados.")
+    else:
+        print("      -> Nenhum erro semantico.")
 
-    print("      -> Nenhum erro semantico.")
+    if not sucesso:
+        print()
+        print("[ERRO FATAL] Foram encontrados erros nas etapas anteriores.")
+        print("Compilacao abortada. A geracao de codigo YAML foi desativada.")
+        return False
 
     # ---- FASE 4: Geracao de Codigo YAML ----
     print("[3/4] Geracao de Codigo YAML...")

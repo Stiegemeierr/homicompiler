@@ -1,0 +1,12 @@
+# Exemplo 3: Erro Semântico
+# A sintaxe está perfeitamente correta, mas a semântica dita que não
+# podemos "LIGAR" ou "DESLIGAR" domínios de leitura (ex: sensor, weather).
+AUTOMACAO "Erro Semantico"
+MODO single
+
+QUANDO:
+- sunset -01:30:00
+
+FAÇA:
+- LIGAR sensor.temperatura_externa
+FIM

@@ -32,14 +32,23 @@ def p_programa_lista(p):
 # -----------------------------------------------------------------------------
 
 def p_automacao(p):
-    '''automacao : AUTOMACAO STRING bloco_gatilho bloco_condicao bloco_acao FIM'''
+    '''automacao : AUTOMACAO STRING bloco_modo bloco_gatilho bloco_condicao bloco_acao FIM'''
     p[0] = {
         'tipo':      'automacao',
         'nome':      p[2],
-        'gatilhos':  p[3],
-        'condicoes': p[4],
-        'acoes':     p[5],
+        'modo':      p[3],
+        'gatilhos':  p[4],
+        'condicoes': p[5],
+        'acoes':     p[6],
     }
+
+def p_bloco_modo(p):
+    '''bloco_modo : MODO EVENTO'''
+    p[0] = p[2]
+
+def p_bloco_modo_vazio(p):
+    '''bloco_modo : '''
+    p[0] = 'single'
 
 
 # -----------------------------------------------------------------------------
@@ -47,7 +56,7 @@ def p_automacao(p):
 # -----------------------------------------------------------------------------
 
 def p_bloco_gatilho(p):
-    '''bloco_gatilho : GATILHO DOISPONTOS lista_gatilhos'''
+    '''bloco_gatilho : QUANDO DOISPONTOS lista_gatilhos'''
     p[0] = p[3]
 
 
@@ -74,7 +83,7 @@ def p_lista_gatilhos_lista(p):
 # -----------------------------------------------------------------------------
 
 def p_comando_gatilho_evento(p):
-    '''comando_gatilho : QUANDO EVENTO TEMPO'''
+    '''comando_gatilho : TRACO EVENTO TEMPO'''
     p[0] = {
         'tipo':   'gatilho_evento',
         'evento': p[2],
@@ -83,11 +92,40 @@ def p_comando_gatilho_evento(p):
 
 
 def p_comando_gatilho_estado(p):
-    '''comando_gatilho : QUANDO ENTIDADE ESTA STRING'''
+    '''comando_gatilho : TRACO ENTIDADE ESTA STRING'''
     p[0] = {
         'tipo':     'gatilho_estado',
         'entidade': p[2],
         'estado':   p[4],
+    }
+
+
+def p_comando_gatilho_acima(p):
+    '''comando_gatilho : TRACO ENTIDADE ACIMA NUMERO'''
+    p[0] = {
+        'tipo':     'gatilho_numerico',
+        'entidade': p[2],
+        'operador': 'acima',
+        'valor':    p[4],
+    }
+
+
+def p_comando_gatilho_abaixo(p):
+    '''comando_gatilho : TRACO ENTIDADE ABAIXO NUMERO'''
+    p[0] = {
+        'tipo':     'gatilho_numerico',
+        'entidade': p[2],
+        'operador': 'abaixo',
+        'valor':    p[4],
+    }
+
+
+def p_comando_gatilho_horario(p):
+    '''comando_gatilho : TRACO HORARIO ENTRE TEMPO E TEMPO'''
+    p[0] = {
+        'tipo':   'gatilho_horario',
+        'inicio': p[4],
+        'fim':    p[6],
     }
 
 
@@ -98,7 +136,7 @@ def p_comando_gatilho_estado(p):
 # -----------------------------------------------------------------------------
 
 def p_bloco_condicao(p):
-    '''bloco_condicao : CONDICAO DOISPONTOS lista_condicoes'''
+    '''bloco_condicao : SE DOISPONTOS lista_condicoes'''
     p[0] = p[3]
 
 
@@ -127,11 +165,40 @@ def p_lista_condicoes_lista(p):
 # -----------------------------------------------------------------------------
 
 def p_comando_condicao(p):
-    '''comando_condicao : SE ENTIDADE ESTA STRING'''
+    '''comando_condicao : TRACO ENTIDADE ESTA STRING'''
     p[0] = {
         'tipo':     'condicao_estado',
         'entidade': p[2],
         'estado':   p[4],
+    }
+
+
+def p_comando_condicao_acima(p):
+    '''comando_condicao : TRACO ENTIDADE ACIMA NUMERO'''
+    p[0] = {
+        'tipo':     'condicao_numerica',
+        'entidade': p[2],
+        'operador': 'acima',
+        'valor':    p[4],
+    }
+
+
+def p_comando_condicao_abaixo(p):
+    '''comando_condicao : TRACO ENTIDADE ABAIXO NUMERO'''
+    p[0] = {
+        'tipo':     'condicao_numerica',
+        'entidade': p[2],
+        'operador': 'abaixo',
+        'valor':    p[4],
+    }
+
+
+def p_comando_condicao_horario(p):
+    '''comando_condicao : TRACO HORARIO ENTRE TEMPO E TEMPO'''
+    p[0] = {
+        'tipo':   'condicao_horario',
+        'inicio': p[4],
+        'fim':    p[6],
     }
 
 
@@ -140,7 +207,7 @@ def p_comando_condicao(p):
 # -----------------------------------------------------------------------------
 
 def p_bloco_acao(p):
-    '''bloco_acao : ACAO DOISPONTOS lista_acoes'''
+    '''bloco_acao : FACA DOISPONTOS lista_acoes'''
     p[0] = p[3]
 
 
@@ -166,26 +233,26 @@ def p_lista_acoes_lista(p):
 # -----------------------------------------------------------------------------
 
 def p_comando_acao_ligar(p):
-    '''comando_acao : LIGAR ENTIDADE'''
+    '''comando_acao : TRACO LIGAR ENTIDADE'''
     p[0] = {
         'tipo':     'acao_ligar',
-        'entidade': p[2],
+        'entidade': p[3],
     }
 
 
 def p_comando_acao_desligar(p):
-    '''comando_acao : DESLIGAR ENTIDADE'''
+    '''comando_acao : TRACO DESLIGAR ENTIDADE'''
     p[0] = {
         'tipo':     'acao_desligar',
-        'entidade': p[2],
+        'entidade': p[3],
     }
 
 
 def p_comando_acao_esperar(p):
-    '''comando_acao : ESPERAR TEMPO'''
+    '''comando_acao : TRACO ESPERAR TEMPO'''
     p[0] = {
         'tipo':     'acao_esperar',
-        'duracao':  p[2],
+        'duracao':  p[3],
     }
 
 
@@ -201,6 +268,7 @@ def p_automacao_erro(p):
         f"[ERRO SINTÁTICO] Estrutura inválida na automação {p[2]}. "
         f"Recuperando no token FIM (linha {p.lineno(4)})."
     )
+    parser.sintax_error = True
     p[0] = {
         'tipo':      'automacao_com_erro',
         'nome':      p[2],
@@ -218,15 +286,17 @@ def p_error(p):
     """
     if p is None:
         print("[ERRO SINTÁTICO] Fim inesperado do arquivo (EOF).")
+        parser.sintax_error = True
         return
 
     print(
         f"[ERRO SINTÁTICO] Token inesperado '{p.value}' "
         f"(tipo: {p.type}) na linha {p.lineno}."
     )
+    parser.sintax_error = True
 
     # Tokens de sincronização — pontos seguros para retomar a análise.
-    sync_tokens = {'FIM', 'GATILHO', 'CONDICAO', 'ACAO', 'AUTOMACAO'}
+    sync_tokens = {'FIM', 'QUANDO', 'SE', 'FACA', 'AUTOMACAO'}
 
     # Descarta tokens até encontrar um ponto de sincronização.
     while True:
@@ -259,17 +329,17 @@ if __name__ == '__main__':
     # Código de exemplo extraído de definicao.md (seção 3).
     codigo_exemplo = '''AUTOMACAO "Por do sol na Sala"
 
-GATILHO:
-    QUANDO sunset -01:30:00
+QUANDO:
+    - sunset -01:30:00
 
-CONDICAO:
-    SE alarm_control_panel.alarmo ESTA "disarmed"
-    SE light.sala ESTA "off"
+SE:
+    - alarm_control_panel.alarmo ESTA "disarmed"
+    - light.sala ESTA "off"
 
-ACAO:
-    LIGAR light.sala
-    ESPERAR 5min
-    DESLIGAR light.sala
+FAÇA:
+    - LIGAR light.sala
+    - ESPERAR 5min
+    - DESLIGAR light.sala
 FIM
 '''
 

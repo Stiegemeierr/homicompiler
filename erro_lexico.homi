@@ -1,0 +1,11 @@
+# Exemplo 1: Erro Léxico
+# O caractere '@' não faz parte da gramática léxica da linguagem HOMI.
+AUTOMACAO "Erro Lexico"
+MODO single
+@
+QUANDO:
+- sunset -01:30:00
+
+FAÇA:
+- LIGAR light.sala
+FIM

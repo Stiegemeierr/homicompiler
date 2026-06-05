@@ -1,5 +1,5 @@
-- id: '1780322777082'
-  alias: Por do sol na Sala
+- id: '1780682548017'
+  alias: Corda Corredor - movimento
   description: ''
   triggers:
   - event: sunset

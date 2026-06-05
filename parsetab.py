@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ACAO AUTOMACAO CONDICAO DESLIGAR DOISPONTOS ENTIDADE ESPERAR ESTA EVENTO FIM GATILHO LIGAR QUANDO SE STRING TEMPOprograma : automacaoprograma : programa automacaoautomacao : AUTOMACAO STRING bloco_gatilho bloco_condicao bloco_acao FIMbloco_gatilho : GATILHO DOISPONTOS lista_gatilhoslista_gatilhos : comando_gatilholista_gatilhos : lista_gatilhos comando_gatilhocomando_gatilho : QUANDO EVENTO TEMPOcomando_gatilho : QUANDO ENTIDADE ESTA STRINGbloco_condicao : CONDICAO DOISPONTOS lista_condicoesbloco_condicao : lista_condicoes : comando_condicaolista_condicoes : lista_condicoes comando_condicaocomando_condicao : SE ENTIDADE ESTA STRINGbloco_acao : ACAO DOISPONTOS lista_acoeslista_acoes : comando_acaolista_acoes : lista_acoes comando_acaocomando_acao : LIGAR ENTIDADEcomando_acao : DESLIGAR ENTIDADEcomando_acao : ESPERAR TEMPOautomacao : AUTOMACAO STRING error FIM'
+_lr_signature = 'ABAIXO ACIMA AUTOMACAO DESLIGAR DOISPONTOS E ENTIDADE ENTRE ESPERAR ESTA EVENTO FACA FIM HORARIO LIGAR MODO NUMERO QUANDO SE STRING TEMPO TRACOprograma : automacaoprograma : programa automacaoautomacao : AUTOMACAO STRING bloco_modo bloco_gatilho bloco_condicao bloco_acao FIMbloco_modo : MODO EVENTObloco_modo : bloco_gatilho : QUANDO DOISPONTOS lista_gatilhoslista_gatilhos : comando_gatilholista_gatilhos : lista_gatilhos comando_gatilhocomando_gatilho : TRACO EVENTO TEMPOcomando_gatilho : TRACO ENTIDADE ESTA STRINGcomando_gatilho : TRACO ENTIDADE ACIMA NUMEROcomando_gatilho : TRACO ENTIDADE ABAIXO NUMEROcomando_gatilho : TRACO HORARIO ENTRE TEMPO E TEMPObloco_condicao : SE DOISPONTOS lista_condicoesbloco_condicao : lista_condicoes : comando_condicaolista_condicoes : lista_condicoes comando_condicaocomando_condicao : TRACO ENTIDADE ESTA STRINGcomando_condicao : TRACO ENTIDADE ACIMA NUMEROcomando_condicao : TRACO ENTIDADE ABAIXO NUMEROcomando_condicao : TRACO HORARIO ENTRE TEMPO E TEMPObloco_acao : FACA DOISPONTOS lista_acoeslista_acoes : comando_acaolista_acoes : lista_acoes comando_acaocomando_acao : TRACO LIGAR ENTIDADEcomando_acao : TRACO DESLIGAR ENTIDADEcomando_acao : TRACO ESPERAR TEMPOautomacao : AUTOMACAO STRING error FIM'
     
-_lr_action_items = {'AUTOMACAO':([0,1,2,4,11,19,],[3,3,-1,-2,-20,-3,]),'$end':([1,2,4,11,19,],[0,-1,-2,-20,-3,]),'STRING':([3,35,40,],[5,41,42,]),'error':([5,],[7,]),'GATILHO':([5,],[8,]),'CONDICAO':([6,16,17,24,34,41,],[10,-4,-5,-6,-7,-8,]),'ACAO':([6,9,16,17,21,22,24,32,34,41,42,],[-10,14,-4,-5,-9,-11,-6,-12,-7,-8,-13,]),'FIM':([7,13,27,28,36,37,38,39,],[11,19,-14,-15,-16,-17,-18,-19,]),'DOISPONTOS':([8,10,14,],[12,15,20,]),'QUANDO':([12,16,17,24,34,41,],[18,18,-5,-6,-7,-8,]),'SE':([15,21,22,32,42,],[23,23,-11,-12,-13,]),'EVENTO':([18,],[25,]),'ENTIDADE':([18,23,29,30,],[26,33,37,38,]),'LIGAR':([20,27,28,36,37,38,39,],[29,29,-15,-16,-17,-18,-19,]),'DESLIGAR':([20,27,28,36,37,38,39,],[30,30,-15,-16,-17,-18,-19,]),'ESPERAR':([20,27,28,36,37,38,39,],[31,31,-15,-16,-17,-18,-19,]),'TEMPO':([25,31,],[34,39,]),'ESTA':([26,33,],[35,40,]),}
+_lr_action_items = {'AUTOMACAO':([0,1,2,4,11,22,],[3,3,-1,-2,-28,-3,]),'$end':([1,2,4,11,22,],[0,-1,-2,-28,-3,]),'STRING':([3,38,46,],[5,50,57,]),'error':([5,],[7,]),'MODO':([5,],[8,]),'QUANDO':([5,6,12,],[-5,10,-4,]),'FIM':([7,16,31,32,42,54,55,56,],[11,22,-22,-23,-24,-25,-26,-27,]),'EVENTO':([8,21,],[12,28,]),'SE':([9,19,20,27,37,50,51,52,63,],[14,-6,-7,-8,-9,-10,-11,-12,-13,]),'FACA':([9,13,19,20,24,25,27,34,37,50,51,52,57,58,59,63,64,],[-15,17,-6,-7,-14,-16,-8,-17,-9,-10,-11,-12,-18,-19,-20,-13,-21,]),'DOISPONTOS':([10,14,17,],[15,18,23,]),'TRACO':([15,18,19,20,23,24,25,27,31,32,34,37,42,50,51,52,54,55,56,57,58,59,63,64,],[21,26,21,-7,33,26,-16,-8,33,-23,-17,-9,-24,-10,-11,-12,-25,-26,-27,-18,-19,-20,-13,-21,]),'ENTIDADE':([21,26,43,44,],[29,35,54,55,]),'HORARIO':([21,26,],[30,36,]),'TEMPO':([28,41,45,49,61,62,],[37,53,56,60,63,64,]),'ESTA':([29,35,],[38,46,]),'ACIMA':([29,35,],[39,47,]),'ABAIXO':([29,35,],[40,48,]),'ENTRE':([30,36,],[41,49,]),'LIGAR':([33,],[43,]),'DESLIGAR':([33,],[44,]),'ESPERAR':([33,],[45,]),'NUMERO':([39,40,47,48,],[51,52,58,59,]),'E':([53,60,],[61,62,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'programa':([0,],[1,]),'automacao':([0,1,],[2,4,]),'bloco_gatilho':([5,],[6,]),'bloco_condicao':([6,],[9,]),'bloco_acao':([9,],[13,]),'lista_gatilhos':([12,],[16,]),'comando_gatilho':([12,16,],[17,24,]),'lista_condicoes':([15,],[21,]),'comando_condicao':([15,21,],[22,32,]),'lista_acoes':([20,],[27,]),'comando_acao':([20,27,],[28,36,]),}
+_lr_goto_items = {'programa':([0,],[1,]),'automacao':([0,1,],[2,4,]),'bloco_modo':([5,],[6,]),'bloco_gatilho':([6,],[9,]),'bloco_condicao':([9,],[13,]),'bloco_acao':([13,],[16,]),'lista_gatilhos':([15,],[19,]),'comando_gatilho':([15,19,],[20,27,]),'lista_condicoes':([18,],[24,]),'comando_condicao':([18,24,],[25,34,]),'lista_acoes':([23,],[31,]),'comando_acao':([23,31,],[32,42,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -29,22 +29,30 @@ _lr_productions = [
   ("S' -> programa","S'",1,None,None,None),
   ('programa -> automacao','programa',1,'p_programa_unico','parser_homi.py',21),
   ('programa -> programa automacao','programa',2,'p_programa_lista','parser_homi.py',26),
-  ('automacao -> AUTOMACAO STRING bloco_gatilho bloco_condicao bloco_acao FIM','automacao',6,'p_automacao','parser_homi.py',35),
-  ('bloco_gatilho -> GATILHO DOISPONTOS lista_gatilhos','bloco_gatilho',3,'p_bloco_gatilho','parser_homi.py',50),
-  ('lista_gatilhos -> comando_gatilho','lista_gatilhos',1,'p_lista_gatilhos_unico','parser_homi.py',61),
-  ('lista_gatilhos -> lista_gatilhos comando_gatilho','lista_gatilhos',2,'p_lista_gatilhos_lista','parser_homi.py',66),
-  ('comando_gatilho -> QUANDO EVENTO TEMPO','comando_gatilho',3,'p_comando_gatilho_evento','parser_homi.py',77),
-  ('comando_gatilho -> QUANDO ENTIDADE ESTA STRING','comando_gatilho',4,'p_comando_gatilho_estado','parser_homi.py',86),
-  ('bloco_condicao -> CONDICAO DOISPONTOS lista_condicoes','bloco_condicao',3,'p_bloco_condicao','parser_homi.py',101),
-  ('bloco_condicao -> <empty>','bloco_condicao',0,'p_bloco_condicao_vazio','parser_homi.py',106),
-  ('lista_condicoes -> comando_condicao','lista_condicoes',1,'p_lista_condicoes_unico','parser_homi.py',116),
-  ('lista_condicoes -> lista_condicoes comando_condicao','lista_condicoes',2,'p_lista_condicoes_lista','parser_homi.py',121),
-  ('comando_condicao -> SE ENTIDADE ESTA STRING','comando_condicao',4,'p_comando_condicao','parser_homi.py',130),
-  ('bloco_acao -> ACAO DOISPONTOS lista_acoes','bloco_acao',3,'p_bloco_acao','parser_homi.py',143),
-  ('lista_acoes -> comando_acao','lista_acoes',1,'p_lista_acoes_unico','parser_homi.py',153),
-  ('lista_acoes -> lista_acoes comando_acao','lista_acoes',2,'p_lista_acoes_lista','parser_homi.py',158),
-  ('comando_acao -> LIGAR ENTIDADE','comando_acao',2,'p_comando_acao_ligar','parser_homi.py',169),
-  ('comando_acao -> DESLIGAR ENTIDADE','comando_acao',2,'p_comando_acao_desligar','parser_homi.py',177),
-  ('comando_acao -> ESPERAR TEMPO','comando_acao',2,'p_comando_acao_esperar','parser_homi.py',185),
-  ('automacao -> AUTOMACAO STRING error FIM','automacao',4,'p_automacao_erro','parser_homi.py',199),
+  ('automacao -> AUTOMACAO STRING bloco_modo bloco_gatilho bloco_condicao bloco_acao FIM','automacao',7,'p_automacao','parser_homi.py',35),
+  ('bloco_modo -> MODO EVENTO','bloco_modo',2,'p_bloco_modo','parser_homi.py',46),
+  ('bloco_modo -> <empty>','bloco_modo',0,'p_bloco_modo_vazio','parser_homi.py',50),
+  ('bloco_gatilho -> QUANDO DOISPONTOS lista_gatilhos','bloco_gatilho',3,'p_bloco_gatilho','parser_homi.py',59),
+  ('lista_gatilhos -> comando_gatilho','lista_gatilhos',1,'p_lista_gatilhos_unico','parser_homi.py',70),
+  ('lista_gatilhos -> lista_gatilhos comando_gatilho','lista_gatilhos',2,'p_lista_gatilhos_lista','parser_homi.py',75),
+  ('comando_gatilho -> TRACO EVENTO TEMPO','comando_gatilho',3,'p_comando_gatilho_evento','parser_homi.py',86),
+  ('comando_gatilho -> TRACO ENTIDADE ESTA STRING','comando_gatilho',4,'p_comando_gatilho_estado','parser_homi.py',95),
+  ('comando_gatilho -> TRACO ENTIDADE ACIMA NUMERO','comando_gatilho',4,'p_comando_gatilho_acima','parser_homi.py',104),
+  ('comando_gatilho -> TRACO ENTIDADE ABAIXO NUMERO','comando_gatilho',4,'p_comando_gatilho_abaixo','parser_homi.py',114),
+  ('comando_gatilho -> TRACO HORARIO ENTRE TEMPO E TEMPO','comando_gatilho',6,'p_comando_gatilho_horario','parser_homi.py',124),
+  ('bloco_condicao -> SE DOISPONTOS lista_condicoes','bloco_condicao',3,'p_bloco_condicao','parser_homi.py',139),
+  ('bloco_condicao -> <empty>','bloco_condicao',0,'p_bloco_condicao_vazio','parser_homi.py',144),
+  ('lista_condicoes -> comando_condicao','lista_condicoes',1,'p_lista_condicoes_unico','parser_homi.py',154),
+  ('lista_condicoes -> lista_condicoes comando_condicao','lista_condicoes',2,'p_lista_condicoes_lista','parser_homi.py',159),
+  ('comando_condicao -> TRACO ENTIDADE ESTA STRING','comando_condicao',4,'p_comando_condicao','parser_homi.py',168),
+  ('comando_condicao -> TRACO ENTIDADE ACIMA NUMERO','comando_condicao',4,'p_comando_condicao_acima','parser_homi.py',177),
+  ('comando_condicao -> TRACO ENTIDADE ABAIXO NUMERO','comando_condicao',4,'p_comando_condicao_abaixo','parser_homi.py',187),
+  ('comando_condicao -> TRACO HORARIO ENTRE TEMPO E TEMPO','comando_condicao',6,'p_comando_condicao_horario','parser_homi.py',197),
+  ('bloco_acao -> FACA DOISPONTOS lista_acoes','bloco_acao',3,'p_bloco_acao','parser_homi.py',210),
+  ('lista_acoes -> comando_acao','lista_acoes',1,'p_lista_acoes_unico','parser_homi.py',220),
+  ('lista_acoes -> lista_acoes comando_acao','lista_acoes',2,'p_lista_acoes_lista','parser_homi.py',225),
+  ('comando_acao -> TRACO LIGAR ENTIDADE','comando_acao',3,'p_comando_acao_ligar','parser_homi.py',236),
+  ('comando_acao -> TRACO DESLIGAR ENTIDADE','comando_acao',3,'p_comando_acao_desligar','parser_homi.py',244),
+  ('comando_acao -> TRACO ESPERAR TEMPO','comando_acao',3,'p_comando_acao_esperar','parser_homi.py',252),
+  ('automacao -> AUTOMACAO STRING error FIM','automacao',4,'p_automacao_erro','parser_homi.py',266),
 ]

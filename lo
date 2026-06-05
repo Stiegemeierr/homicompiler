@@ -1,0 +1,51 @@
+======================================================================
+  COMPILADOR HOMI -> HOME ASSISTANT YAML
+======================================================================
+
+Arquivo de entrada: exemplos_completos.homi
+Arquivo de saida:   output.yaml
+
+[1/4] Analise Lexica + Sintatica...
+[ERRO SINTÁTICO] Token inesperado 'MODO' (tipo: EVENTO) na linha 2.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 3.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 7.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 12.
+[ERRO SINTÁTICO] Token inesperado 'AUTOMACAO' (tipo: AUTOMACAO) na linha 18.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 20.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 24.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 29.
+[ERRO SINTÁTICO] Token inesperado 'AUTOMACAO' (tipo: AUTOMACAO) na linha 35.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 37.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 39.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 42.
+[ERRO SINTÁTICO] Token inesperado 'AUTOMACAO' (tipo: AUTOMACAO) na linha 46.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 48.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 50.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 54.
+[ERRO SINTÁTICO] Token inesperado 'AUTOMACAO' (tipo: AUTOMACAO) na linha 58.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 60.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 62.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 64.
+[ERRO SINTÁTICO] Token inesperado 'AUTOMACAO' (tipo: AUTOMACAO) na linha 68.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 70.
+[ERRO LÉXICO] Caractere ilegal '7' na linha 71, posição 1970
+[ERRO LÉXICO] Caractere ilegal '5' na linha 71, posição 1971
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 72.
+[ERRO SINTÁTICO] Token inesperado 'AUTOMACAO' (tipo: AUTOMACAO) na linha 77.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 79.
+[ERRO LÉXICO] Caractere ilegal '2' na linha 80, posição 2204
+[ERRO LÉXICO] Caractere ilegal '0' na linha 80, posição 2205
+[ERRO LÉXICO] Caractere ilegal '1' na linha 81, posição 2256
+[ERRO LÉXICO] Caractere ilegal '0' na linha 81, posição 2257
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 82.
+[ERRO SINTÁTICO] Token inesperado 'AUTOMACAO' (tipo: AUTOMACAO) na linha 87.
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 89.
+[ERRO LÉXICO] Caractere ilegal '5' na linha 90, posição 2486
+[ERRO SINTÁTICO] Token inesperado ':' (tipo: DOISPONTOS) na linha 91.
+[ERRO SINTÁTICO] Fim inesperado do arquivo (EOF).
+[ERRO FATAL] Falha na analise sintatica. AST nao gerada.
+Compilacao abortada.
+
+======================================================================
+  Compilacao finalizada com erros.
+======================================================================

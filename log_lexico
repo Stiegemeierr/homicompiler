@@ -1,0 +1,25 @@
+======================================================================
+  COMPILADOR HOMI -> HOME ASSISTANT YAML
+======================================================================
+
+Arquivo de entrada: erro_lexico.homi
+Arquivo de saida:   output.yaml
+
+[1/4] Analise Lexica + Sintatica...
+[ERRO LÉXICO] Caractere ilegal '@' na linha 5, posição 132
+      -> 1 automacao(oes) encontrada(s).
+[2/4] Analise Semantica...
+Tabela de Símbolos:
+---------------------------------------------
+  Entidade                            Domínio   
+---------------------------------------------
+  light.sala                          light     
+---------------------------------------------
+      -> Nenhum erro semantico.
+
+[ERRO FATAL] Foram encontrados erros nas etapas anteriores.
+Compilacao abortada. A geracao de codigo YAML foi desativada.
+
+======================================================================
+  Compilacao finalizada com erros.
+======================================================================

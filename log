@@ -1,0 +1,97 @@
+======================================================================
+  COMPILADOR HOMI -> HOME ASSISTANT YAML
+======================================================================
+
+Arquivo de entrada: exemplos_completos.homi
+Arquivo de saida:   output.yaml
+
+[1/4] Analise Lexica + Sintatica...
+      -> 34 automacao(oes) encontrada(s).
+[2/4] Analise Semantica...
+Tabela de Símbolos:
+---------------------------------------------
+  Entidade                            Domínio   
+---------------------------------------------
+  binary_sensor.corredor_suite_luminance_motion_sensor_movimento binary_sensor
+  binary_sensor.tz3000_6ygjfyll_ts0202 binary_sensor
+  binary_sensor.motion_sensor_movimento binary_sensor
+  switch.bb97c45f407329aca067d3f274499a81 switch    
+  alarm_control_panel.37dc24654a788314bfb4de2e2c827fd0 alarm_control_panel
+  light.corda_led_corredor            light     
+  sensor.horario                      sensor    
+  light.a4595b3013d5c452494f933e1e104129 light     
+  alarm_control_panel.alarmo          alarm_control_panel
+  weather.forecast_casa               weather   
+  automation.cozinha_ligar_luzes      automation
+  switch.eff0606bc3425bb3266f319ae937d810 switch    
+  sensor.d46e6d632a36b57b7c07b1885c32ad88 sensor    
+  switch.6a55b660d511de43c42b534c2f201dbb switch    
+  script.notificar_descarregando      script    
+  script.notificar_carregando         script    
+  script.notificar_carregando_critico script    
+  switch.e26d13dc064b552d0c4c5b1401328d9a switch    
+  switch.d8598c0f4effd9848ca64cd9981f14f9 switch    
+  switch.b2b332adfb28616f2a8a705c922f6ead switch    
+  switch.luzes_da_cozinha             switch    
+  switch.luzes_da_sala                switch    
+  switch.luzes_do_lavabo              switch    
+  switch.cozinha_nichos_led_interruptor_1 switch    
+  script.comando_alexa_desligar_tela  script    
+  media_player.music_frame_2          media_player
+  media_player.music_frame            media_player
+  media_player.nestmini0550           media_player
+  media_player.home_theater_2         media_player
+  media_player.tx_nr5100              media_player
+  sensor.timer_closet                 sensor    
+  binary_sensor.1e1e192bce0cdc593a3e72dc6e996b46 binary_sensor
+  script.timer_closet_start           script    
+  switch.e6bd5f71286d23ea1c87b580aea4407c switch    
+  switch.8aa7f9cf78ad1d62f4df88ca2360df73 switch    
+  switch.espelho_do_lavabo            switch    
+  switch.sonoff_100200129d_2          switch    
+  switch.sonoff_100200129d_3          switch    
+  switch.sonoff_100200129d_1          switch    
+  script.notificar_celular            script    
+  sensor.sonoff_a440016554            sensor    
+  switch.luzes_da_suite               switch    
+  light.arandela_suite                light     
+  switch.luzes_da_nicole              switch    
+  switch.luzes_do_eric                switch    
+  switch.sonoff_10018dee48_1          switch    
+  script.timer_finish_all             script    
+  light.fita_led_rgb_5m               light     
+  switch.2a3fe028eb0da3f11e73437fe3b34b5d switch    
+  switch.sonoff_1001e0dd5a_1          switch    
+  binary_sensor.9b6b660ce19b4b6c1d36e0534e94f51c binary_sensor
+  binary_sensor.5e8d44a8bf2542a3a9c249de1dcaff20 binary_sensor
+  media_player.eea259ec8e8a95d09dd5c7d8619d1658 media_player
+  switch.ilha_interruptor_1           switch    
+  switch.sonoff_1001887e06_2          switch    
+  switch.73bd5ca47e3ec3a9bc6a463e0ae0dc98 switch    
+  switch.dac219311283b7d5262d710d8f61b278 switch    
+  switch.57b28338c5ca8de7d7763d4539ce4e07 switch    
+  switch.f3669be2d38feb3b98c2d8c46ff1b0c6 switch    
+  switch.5e57f3722928049f33c44caf233138cd switch    
+  binary_sensor.tze200_3towulqd_ts0601_ocupacao binary_sensor
+  script.iniciar_timer_nicole         script    
+  light.973148b62067d63a345f9c1cd90436fb light     
+  sensor.evento                       sensor    
+  light.d51d48f52a856d2a87a080b71d23ff20 light     
+  light.07ee905d710ace9fac2d8121924bcd15 light     
+  switch.976f5231d4889cf3165bc14dc157bbef switch    
+  light.f3e4348b0f9c6ea0e601151a41f13e8e light     
+  switch.be630987e593594bf93e47138507f2f1 switch    
+  light.f3bc1ca66e44276249fe6e63bf0ef281 light     
+  switch.c6be082d1cb3b4d93d99cdda332086f9 switch    
+  cover.8e38e2f9b76939a6c380fad9428f1fd0 cover     
+  sensor.triumph_v2_90f2              sensor    
+  light.1f44a726233f4ea71a519484b6d6e1da light     
+---------------------------------------------
+      -> Nenhum erro semantico.
+[3/4] Geracao de Codigo YAML...
+[4/4] Salvando arquivo de saida: output.yaml
+[OK] Arquivo salvo em: output.yaml
+
+======================================================================
+  Compilacao concluida com sucesso!
+======================================================================
