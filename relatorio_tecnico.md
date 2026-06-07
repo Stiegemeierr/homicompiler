@@ -47,35 +47,44 @@ A linguagem Homi é definida por uma **Gramática Livre de Contexto** (GLC), for
 ### 2.1. Produções da GLC
 
 ```bnf
-⟨programa⟩         ::= ⟨automacao⟩
-                      | ⟨programa⟩ ⟨automacao⟩
+⟨programa⟩           ::= ⟨automacao⟩
+                        | ⟨programa⟩ ⟨automacao⟩
 
-⟨automacao⟩        ::= AUTOMACAO  STRING  ⟨bloco_gatilho⟩  ⟨bloco_condicao⟩  ⟨bloco_acao⟩  FIM
+⟨automacao⟩          ::= AUTOMACAO  STRING  ⟨bloco_modo⟩  ⟨bloco_gatilho⟩  ⟨bloco_condicao⟩  ⟨bloco_acao⟩  FIM
 
-⟨bloco_gatilho⟩    ::= GATILHO  DOISPONTOS  ⟨lista_gatilhos⟩
+⟨bloco_modo⟩         ::= MODO  EVENTO
+                        | ε
 
-⟨lista_gatilhos⟩   ::= ⟨comando_gatilho⟩
-                      | ⟨lista_gatilhos⟩ ⟨comando_gatilho⟩
+⟨bloco_gatilho⟩      ::= QUANDO  DOISPONTOS  ⟨lista_gatilhos⟩
 
-⟨comando_gatilho⟩  ::= QUANDO  EVENTO  TEMPO
-                      | QUANDO  ENTIDADE  ESTA  STRING
+⟨lista_gatilhos⟩     ::= ⟨comando_gatilho⟩
+                        | ⟨lista_gatilhos⟩ ⟨comando_gatilho⟩
 
-⟨bloco_condicao⟩   ::= CONDICAO  DOISPONTOS  ⟨lista_condicoes⟩
-                      | ε
+⟨comando_gatilho⟩    ::= TRACO  EVENTO  TEMPO
+                        | TRACO  ENTIDADE  ESTA  STRING
+                        | TRACO  ENTIDADE  ACIMA  NUMERO
+                        | TRACO  ENTIDADE  ABAIXO  NUMERO
+                        | TRACO  HORARIO  ENTRE  TEMPO  E  TEMPO
 
-⟨lista_condicoes⟩  ::= ⟨comando_condicao⟩
-                      | ⟨lista_condicoes⟩ ⟨comando_condicao⟩
+⟨bloco_condicao⟩     ::= SE  DOISPONTOS  ⟨lista_condicoes⟩
+                        | ε
 
-⟨comando_condicao⟩ ::= SE  ENTIDADE  ESTA  STRING
+⟨lista_condicoes⟩    ::= ⟨comando_condicao⟩
+                        | ⟨lista_condicoes⟩ ⟨comando_condicao⟩
 
-⟨bloco_acao⟩       ::= ACAO  DOISPONTOS  ⟨lista_acoes⟩
+⟨comando_condicao⟩   ::= TRACO  ENTIDADE  ESTA  STRING
+                        | TRACO  ENTIDADE  ACIMA  NUMERO
+                        | TRACO  ENTIDADE  ABAIXO  NUMERO
+                        | TRACO  HORARIO  ENTRE  TEMPO  E  TEMPO
 
-⟨lista_acoes⟩      ::= ⟨comando_acao⟩
-                      | ⟨lista_acoes⟩ ⟨comando_acao⟩
+⟨bloco_acao⟩         ::= FACA  DOISPONTOS  ⟨lista_acoes⟩
 
-⟨comando_acao⟩     ::= LIGAR  ENTIDADE
-                      | DESLIGAR  ENTIDADE
-                      | ESPERAR  TEMPO
+⟨lista_acoes⟩        ::= ⟨comando_acao⟩
+                        | ⟨lista_acoes⟩ ⟨comando_acao⟩
+
+⟨comando_acao⟩       ::= TRACO  LIGAR  ENTIDADE
+                        | TRACO  DESLIGAR  ENTIDADE
+                        | TRACO  ESPERAR  TEMPO
 ```
 
 ### 2.2. Classificação dos Símbolos
@@ -85,29 +94,37 @@ A linguagem Homi é definida por uma **Gramática Livre de Contexto** (GLC), for
 | Token | Descrição | Exemplo de lexema |
 |---|---|---|
 | `AUTOMACAO` | Palavra-chave de abertura de bloco | `AUTOMACAO` |
-| `GATILHO` | Delimitador de seção de gatilhos | `GATILHO` |
-| `CONDICAO` | Delimitador de seção de condições | `CONDICAO` |
-| `ACAO` | Delimitador de seção de ações | `ACAO` |
-| `QUANDO` | Introdutor de cláusula de gatilho | `QUANDO` |
-| `SE` | Introdutor de cláusula condicional | `SE` |
+| `MODO` | Palavra-chave de definição de modo de execução | `MODO` |
+| `QUANDO` | Delimitador de seção de gatilhos | `QUANDO` |
+| `SE` | Delimitador de seção de condições | `SE` |
+| `FACA` | Delimitador de seção de ações (aceita `FAÇA`) | `FAÇA` |
 | `LIGAR` | Comando de ativação de dispositivo | `LIGAR` |
 | `DESLIGAR` | Comando de desativação de dispositivo | `DESLIGAR` |
 | `ESPERAR` | Comando de temporização | `ESPERAR` |
 | `ESTA` | Operador de verificação de estado | `ESTA` |
 | `FIM` | Palavra-chave de encerramento de bloco | `FIM` |
+| `ACIMA` | Operador de comparação numérica (maior que) | `ACIMA` |
+| `ABAIXO` | Operador de comparação numérica (menor que) | `ABAIXO` |
+| `ENTRE` | Operador de intervalo temporal | `ENTRE` |
+| `E` | Conjunção para intervalo temporal | `E` |
+| `HORARIO` | Palavra-chave para gatilho/condição de horário | `HORARIO` |
 | `DOISPONTOS` | Delimitador estrutural | `:` |
+| `TRACO` | Marcador de item de lista | `-` |
 | `ENTIDADE` | Identificador de dispositivo (domínio.nome) | `light.sala` |
 | `STRING` | Literal de cadeia de caracteres | `"off"` |
-| `EVENTO` | Evento geográfico/temporal | `sunset` |
-| `TEMPO` | Expressão de duração ou deslocamento | `5min`, `-01:30:00` |
+| `EVENTO` | Evento geográfico/temporal ou modo de execução | `sunset`, `single` |
+| `TEMPO` | Expressão de duração ou deslocamento | `5min`, `1h 2min 3s`, `-01:30:00` |
+| `NUMERO` | Literal numérico inteiro | `20`, `75` |
 
-**Não-terminais:** `⟨programa⟩`, `⟨automacao⟩`, `⟨bloco_gatilho⟩`, `⟨lista_gatilhos⟩`, `⟨comando_gatilho⟩`, `⟨bloco_condicao⟩`, `⟨lista_condicoes⟩`, `⟨comando_condicao⟩`, `⟨bloco_acao⟩`, `⟨lista_acoes⟩`, `⟨comando_acao⟩`.
+**Não-terminais:** `⟨programa⟩`, `⟨automacao⟩`, `⟨bloco_modo⟩`, `⟨bloco_gatilho⟩`, `⟨lista_gatilhos⟩`, `⟨comando_gatilho⟩`, `⟨bloco_condicao⟩`, `⟨lista_condicoes⟩`, `⟨comando_condicao⟩`, `⟨bloco_acao⟩`, `⟨lista_acoes⟩`, `⟨comando_acao⟩`.
 
 ### 2.3. Observações sobre a Gramática
 
 - O não-terminal `⟨bloco_condicao⟩` admite derivação para a cadeia vazia (ε), tornando o bloco de condições facultativo. Essa propriedade permite a declaração de automações que possuem apenas gatilhos e ações, sem condições restritivas.
+- O não-terminal `⟨bloco_modo⟩` também admite derivação para ε, tornando a declaração de modo opcional. Quando omitido, o valor padrão `'single'` é assumido.
 - As regras de `⟨lista_gatilhos⟩`, `⟨lista_condicoes⟩` e `⟨lista_acoes⟩` são definidas por recursão à esquerda, uma vez que o algoritmo LALR(1) empregado pelo PLY trata de forma nativa esse tipo de recursão sem introdução de conflitos na tabela de análise.
 - A gramática não apresenta ambiguidades: cada sequência de tokens possui uma única derivação possível, dispensando a declaração de regras de precedência ou associatividade.
+- O token `TRACO` (`-`) funciona como marcador de item de lista, precedendo cada gatilho, condição e ação. Isso permite uma sintaxe visual semelhante a listas em YAML/Markdown, melhorando a legibilidade.
 
 ---
 
@@ -124,19 +141,21 @@ As regras léxicas são especificadas de duas formas complementares no PLY:
 1. **Funções** (`def t_NOME(t)`): Avaliadas na ordem de declaração no arquivo-fonte (do topo à base). Utilizadas quando se necessita de lógica adicional além do simples reconhecimento de padrão.
 2. **Variáveis de cadeia** (`t_NOME = r'...'`): Avaliadas após todas as funções, ordenadas automaticamente pelo comprimento decrescente da expressão regular.
 
-A tabela a seguir enumera as expressões regulares associadas a cada token:
+A tabela a seguir enumera as expressões regulares associadas aos principais tokens:
 
 | Token | Expressão Regular | Formato reconhecido |
 |---|---|---|
 | `STRING` | `r'"[^"]*"'` | Qualquer sequência delimitada por aspas duplas |
-| `TEMPO` | `r'-?\d{1,2}:\d{2}:\d{2}\|\d+min\|\d+s'` | Deslocamento `HH:MM:SS`, minutos (`Nmin`) ou segundos (`Ns`) |
-| `ENTIDADE` | `r'[a-z][a-z0-9_]*\.[a-z][a-z0-9_]*'` | Identificador no formato `domínio.nome` |
+| `TEMPO` | `r'-?\d{1,2}:\d{2}:\d{2}\|(?:\d+h[ \t]*)?(?:\d+min[ \t]*)?\d+s\|(?:\d+h[ \t]*)?\d+min\|\d+h'` | Desvio `HH:MM:SS`, compostos (`1h 2min 3s`), isolados (`Nmin`, `Ns`, `Nh`) |
+| `NUMERO` | `r'\d+'` | Inteiros positivos |
+| `ENTIDADE` | `r'[a-z][a-z0-9_]*\.[a-z0-9][a-z0-9_]*'` | Identificador no formato `domínio.nome` |
 | `EVENTO` | `r'sunset\|sunrise'` | Eventos geográficos predefinidos |
 | `DOISPONTOS` | `r':'` | Caractere `:` |
+| `TRACO` | `r'-'` | Caractere `-` |
 
 ### 3.3. Resolução de Palavras-Chave
 
-A distinção entre palavras-chave e identificadores genéricos é realizada por meio de um dicionário de palavras reservadas (`reserved`). A função `t_PALAVRA`, definida com a expressão regular `r'[A-Za-z_][A-Za-z0-9_]*'`, captura qualquer sequência alfanumérica e, em seguida, consulta o dicionário `reserved` para determinar o tipo correto do token. Caso a cadeia reconhecida não conste no dicionário, o token é classificado como `EVENTO`, permitindo extensibilidade futura da linguagem.
+A distinção entre palavras-chave e identificadores genéricos é realizada por meio de um dicionário de palavras reservadas (`reserved`). A função `t_PALAVRA`, definida com a expressão regular `r'[A-Za-z_Çç][A-Za-z0-9_Çç]*'`, captura qualquer sequência alfanumérica (incluindo caracteres com cedilha) e, em seguida, consulta o dicionário `reserved` para determinar o tipo correto do token. Caso a cadeia reconhecida não conste no dicionário, o token é classificado como `EVENTO`, permitindo extensibilidade futura da linguagem. Essa abordagem é também utilizada para aceitar valores de modo de execução como `single`, `restart` e `parallel`, que são recebidos como tokens `EVENTO`.
 
 ### 3.4. Tratamento de Elementos Descartáveis
 
@@ -155,7 +174,7 @@ Cada token emitido pelo analisador léxico é um objeto `LexToken` da biblioteca
 | Atributo | Tipo | Descrição |
 |---|---|---|
 | `type` | `str` | Nome do tipo de token (e.g., `'AUTOMACAO'`, `'ENTIDADE'`) |
-| `value` | `str` | Lexema original reconhecido (e.g., `'light.sala'`) |
+| `value` | `str` ou `int` | Lexema original reconhecido (e.g., `'light.sala'`); tokens `NUMERO` possuem valor inteiro |
 | `lineno` | `int` | Número da linha em que o token foi encontrado |
 | `lexpos` | `int` | Posição absoluta (índice) do início do token na cadeia de entrada |
 
@@ -184,6 +203,7 @@ A AST é materializada como uma hierarquia de **dicionários e listas nativas do
   {
     'tipo':      'automacao',            # Tipo do nó raiz
     'nome':      '"Nome da Automação"',  # Literal STRING do código-fonte
+    'modo':      'single',               # Modo de execução (padrão: 'single')
     'gatilhos':  [ ... ],                # Lista de nós ⟨comando_gatilho⟩
     'condicoes': [ ... ],                # Lista de nós ⟨comando_condicao⟩ (pode ser [])
     'acoes':     [ ... ],                # Lista de nós ⟨comando_acao⟩
@@ -197,7 +217,11 @@ Os nós-folha dos sub-blocos assumem os seguintes formatos:
 |---|---|
 | `gatilho_evento` | `tipo`, `evento`, `offset` |
 | `gatilho_estado` | `tipo`, `entidade`, `estado` |
+| `gatilho_numerico` | `tipo`, `entidade`, `operador`, `valor` |
+| `gatilho_horario` | `tipo`, `inicio`, `fim` |
 | `condicao_estado` | `tipo`, `entidade`, `estado` |
+| `condicao_numerica` | `tipo`, `entidade`, `operador`, `valor` |
+| `condicao_horario` | `tipo`, `inicio`, `fim` |
 | `acao_ligar` | `tipo`, `entidade` |
 | `acao_desligar` | `tipo`, `entidade` |
 | `acao_esperar` | `tipo`, `duracao` |
@@ -212,7 +236,7 @@ A produção `automacao : AUTOMACAO STRING error FIM` utiliza o pseudo-token `er
 
 **Nível 2 — Função `p_error(p)`:**
 
-Quando o parser encontra um token inesperado que não é capturado pela regra de erro estrutural acima, a função `p_error` é invocada. Essa função implementa a sincronização por descarte: consome tokens do fluxo léxico iterativamente por meio de chamadas a `p.lexer.token()` até localizar um **token de sincronização** pertencente ao conjunto `{'FIM', 'GATILHO', 'CONDICAO', 'ACAO', 'AUTOMACAO'}`. Ao encontrá-lo, o estado de erro do parser é limpo (`parser.errok()`), o autômato é reiniciado (`parser.restart()`), e o token de sincronização é reinjetado no fluxo de análise por meio de uma substituição dinâmica do método de leitura do parser (`parser.token = lambda _tok=tok: _tok`).
+Quando o parser encontra um token inesperado que não é capturado pela regra de erro estrutural acima, a função `p_error` é invocada. Essa função implementa a sincronização por descarte: consome tokens do fluxo léxico iterativamente por meio de chamadas a `p.lexer.token()` até localizar um **token de sincronização** pertencente ao conjunto `{'FIM', 'QUANDO', 'SE', 'FACA', 'AUTOMACAO'}`. Ao encontrá-lo, o estado de erro do parser é limpo (`parser.errok()`), o autômato é reiniciado (`parser.restart()`), e o token de sincronização é reinjetado no fluxo de análise por meio de uma substituição dinâmica do método de leitura do parser (`parser.token = lambda _tok=tok: _tok`).
 
 Essa abordagem em dois níveis permite que o compilador reporte **múltiplos erros** em uma única passagem, prosseguindo a análise das automações subsequentes àquela que continha o erro.
 
@@ -238,7 +262,7 @@ Tabela de Símbolos (exemplo):
 └───────────────────────────────────┴────────────────────┘
 ```
 
-O registro ocorre de forma incremental durante a visitação dos nós de gatilhos de estado, condições e ações. Entidades previamente registradas não são inseridas novamente, evitando duplicações.
+O registro ocorre de forma incremental durante a visitação dos nós de gatilhos de estado, gatilhos numéricos, condições e ações. Entidades previamente registradas não são inseridas novamente, evitando duplicações.
 
 ### 5.3. Checagem de Tipos
 
@@ -281,7 +305,7 @@ O gerador opera como um **Visitor** que mapeia cada categoria de nó da AST para
 | `gatilhos` | `triggers` | Lista de gatilhos traduzidos |
 | `condicoes` | `conditions` | Lista de condições traduzidas |
 | `acoes` | `actions` | Lista de ações traduzidas |
-| — | `mode` | Modo de execução fixo: `'single'` |
+| `modo` | `mode` | Modo de execução (ex: `single`, `restart`; padrão: `single`) |
 
 **Nó `gatilho_evento` → Trigger solar:**
 ```yaml
@@ -299,12 +323,40 @@ O gerador opera como um **Visitor** que mapeia cada categoria de nó da AST para
   trigger: state         # Tipo fixo: 'state'
 ```
 
+**Nó `gatilho_numerico` → Trigger de estado numérico:**
+```yaml
+- trigger: numeric_state
+  entity_id:
+  - sensor.temperatura   # Atributo 'entidade', envelopado em lista
+  above: 25              # ou 'below: 10', conforme o operador
+```
+
+**Nó `gatilho_horario` → Trigger de horário:**
+```yaml
+- trigger: time
+  at: "18:00:00"         # Atributo 'inicio' da AST
+```
+
 **Nó `condicao_estado` → Condição de estado:**
 ```yaml
 - condition: state       # Tipo fixo: 'state'
   entity_id: light.sala  # Atributo 'entidade'
   state:
   - "off"                # Atributo 'estado' (aspas removidas)
+```
+
+**Nó `condicao_numerica` → Condição de estado numérico:**
+```yaml
+- condition: numeric_state
+  entity_id: sensor.temp # Atributo 'entidade'
+  above: 25              # ou 'below: 10', conforme o operador
+```
+
+**Nó `condicao_horario` → Condição de horário:**
+```yaml
+- condition: time
+  after: "18:00:00"      # Atributo 'inicio'
+  before: "06:00:00"     # Atributo 'fim'
 ```
 
 **Nó `acao_ligar` / `acao_desligar` → Chamada de serviço:**
@@ -329,11 +381,14 @@ O gerador opera como um **Visitor** que mapeia cada categoria de nó da AST para
 
 O método `_parsear_tempo` realiza a tradução de expressões temporais simplificadas da linguagem Homi para o dicionário de atraso (*delay*) nativo do *Home Assistant*. A conversão emprega expressões regulares para identificar o formato de entrada:
 
-| Formato de entrada | Regex aplicada | Exemplo de conversão |
+| Formato de entrada | Método de extração | Exemplo de conversão |
 |---|---|---|
-| `Ns` (segundos) | `r'^(\d+)s$'` | `'10s'` → `{hours: 0, minutes: 0, seconds: 10, milliseconds: 0}` |
-| `Nmin` (minutos) | `r'^(\d+)min$'` | `'5min'` → `{hours: 0, minutes: 5, seconds: 0, milliseconds: 0}` |
-| `HH:MM:SS` | `r'^-?(\d{1,2}):(\d{2}):(\d{2})$'` | `'01:30:00'` → `{hours: 1, minutes: 30, seconds: 0, milliseconds: 0}` |
+| `HH:MM:SS` | `re.match(r'^-?(\d{1,2}):(\d{2}):(\d{2})$')` | `'01:30:00'` → `{hours: 1, minutes: 30, seconds: 0, milliseconds: 0}` |
+| Composto (`NhNminNs`) | `re.search` para cada componente | `'1h 2min 3s'` → `{hours: 1, minutes: 2, seconds: 3, milliseconds: 0}` |
+| `Nmin Ns` | `re.search` para `min` e `s` | `'1min 45s'` → `{hours: 0, minutes: 1, seconds: 45, milliseconds: 0}` |
+| `Ns` (segundos) | `re.search(r'(\d+)s')` | `'10s'` → `{hours: 0, minutes: 0, seconds: 10, milliseconds: 0}` |
+| `Nmin` (minutos) | `re.search(r'(\d+)min')` | `'5min'` → `{hours: 0, minutes: 5, seconds: 0, milliseconds: 0}` |
+| `Nh` (horas) | `re.search(r'(\d+)h')` | `'2h'` → `{hours: 2, minutes: 0, seconds: 0, milliseconds: 0}` |
 
 ### 6.4. Serialização e Exportação
 
@@ -351,22 +406,23 @@ O método `salvar_arquivo` grava o conteúdo YAML resultante em disco, no caminh
 
 ### 7.1. Código-Fonte Homi (Entrada)
 
-O exemplo abaixo define uma automação denominada "Por do sol na Sala" que aciona a iluminação da sala uma hora e trinta minutos antes do pôr do sol, sob a condição de que o alarme esteja desarmado e a luz esteja desligada, aguarda cinco minutos e, em seguida, desativa a iluminação:
+O exemplo abaixo define uma automação denominada "Corda Corredor - movimento" que aciona a iluminação da sala uma hora e trinta minutos antes do pôr do sol, sob a condição de que o alarme esteja desarmado e a luz esteja desligada, aguarda cinco minutos e, em seguida, desativa a iluminação:
 
 ```
-AUTOMACAO "Por do sol na Sala"
+AUTOMACAO "Corda Corredor - movimento"
+MODO single
 
-GATILHO:
-    QUANDO sunset -01:30:00
+QUANDO:
+- sunset -01:30:00
 
-CONDICAO:
-    SE alarm_control_panel.alarmo ESTA "disarmed"
-    SE light.sala ESTA "off"
+SE:
+- alarm_control_panel.alarmo ESTA "disarmed"
+- light.sala ESTA "off"
 
-ACAO:
-    LIGAR light.sala
-    ESPERAR 5min
-    DESLIGAR light.sala
+FAÇA:
+- LIGAR light.sala
+- ESPERAR 5min
+- DESLIGAR light.sala
 FIM
 ```
 
@@ -377,31 +433,36 @@ A tabela de tokens gerada pelo analisador léxico para o código-fonte acima é 
 | Token | Valor | Linha | Posição |
 |---|---|---|---|
 | `AUTOMACAO` | `AUTOMACAO` | 1 | 0 |
-| `STRING` | `"Por do sol na Sala"` | 1 | 10 |
-| `GATILHO` | `GATILHO` | 3 | 32 |
-| `DOISPONTOS` | `:` | 3 | 39 |
-| `QUANDO` | `QUANDO` | 4 | 45 |
-| `EVENTO` | `sunset` | 4 | 52 |
-| `TEMPO` | `-01:30:00` | 4 | 59 |
-| `CONDICAO` | `CONDICAO` | 6 | 70 |
-| `DOISPONTOS` | `:` | 6 | 78 |
-| `SE` | `SE` | 7 | 84 |
-| `ENTIDADE` | `alarm_control_panel.alarmo` | 7 | 87 |
-| `ESTA` | `ESTA` | 7 | 114 |
-| `STRING` | `"disarmed"` | 7 | 119 |
-| `SE` | `SE` | 8 | 134 |
-| `ENTIDADE` | `light.sala` | 8 | 137 |
-| `ESTA` | `ESTA` | 8 | 149 |
-| `STRING` | `"off"` | 8 | 154 |
-| `ACAO` | `ACAO` | 10 | 160 |
-| `DOISPONTOS` | `:` | 10 | 164 |
-| `LIGAR` | `LIGAR` | 11 | 170 |
-| `ENTIDADE` | `light.sala` | 11 | 176 |
-| `ESPERAR` | `ESPERAR` | 12 | 192 |
-| `TEMPO` | `5min` | 12 | 200 |
-| `DESLIGAR` | `DESLIGAR` | 13 | 209 |
-| `ENTIDADE` | `light.sala` | 13 | 218 |
-| `FIM` | `FIM` | 14 | 230 |
+| `STRING` | `"Corda Corredor - movimento"` | 1 | 10 |
+| `MODO` | `MODO` | 2 | 40 |
+| `EVENTO` | `single` | 2 | 45 |
+| `QUANDO` | `QUANDO` | 4 | 52 |
+| `DOISPONTOS` | `:` | 4 | 58 |
+| `TRACO` | `-` | 5 | 60 |
+| `EVENTO` | `sunset` | 5 | 62 |
+| `TEMPO` | `-01:30:00` | 5 | 69 |
+| `SE` | `SE` | 7 | 80 |
+| `DOISPONTOS` | `:` | 7 | 82 |
+| `TRACO` | `-` | 8 | 84 |
+| `ENTIDADE` | `alarm_control_panel.alarmo` | 8 | 86 |
+| `ESTA` | `ESTA` | 8 | 113 |
+| `STRING` | `"disarmed"` | 8 | 118 |
+| `TRACO` | `-` | 9 | 130 |
+| `ENTIDADE` | `light.sala` | 9 | 132 |
+| `ESTA` | `ESTA` | 9 | 144 |
+| `STRING` | `"off"` | 9 | 149 |
+| `FACA` | `FAÇA` | 11 | 155 |
+| `DOISPONTOS` | `:` | 11 | 159 |
+| `TRACO` | `-` | 12 | 161 |
+| `LIGAR` | `LIGAR` | 12 | 163 |
+| `ENTIDADE` | `light.sala` | 12 | 169 |
+| `TRACO` | `-` | 13 | 181 |
+| `ESPERAR` | `ESPERAR` | 13 | 183 |
+| `TEMPO` | `5min` | 13 | 191 |
+| `TRACO` | `-` | 14 | 196 |
+| `DESLIGAR` | `DESLIGAR` | 14 | 198 |
+| `ENTIDADE` | `light.sala` | 14 | 207 |
+| `FIM` | `FIM` | 15 | 219 |
 
 ### 7.3. Saída da Análise Sintática (AST)
 
@@ -411,7 +472,8 @@ A Árvore de Sintaxe Abstrata gerada pelo parser para o exemplo acima assume a s
 [
     {
         'tipo': 'automacao',
-        'nome': '"Por do sol na Sala"',
+        'nome': '"Corda Corredor - movimento"',
+        'modo': 'single',
         'gatilhos': [
             {
                 'tipo': 'gatilho_evento',
@@ -455,11 +517,11 @@ Tabela de Símbolos:
 
 ### 7.5. Código YAML Gerado (Saída Final)
 
-O arquivo `automations_gerado.yaml` produzido pelo compilador contém:
+O arquivo YAML produzido pelo compilador contém:
 
 ```yaml
 - id: '1780322493826'
-  alias: Por do sol na Sala
+  alias: Corda Corredor - movimento
   description: ''
   triggers:
   - event: sunset

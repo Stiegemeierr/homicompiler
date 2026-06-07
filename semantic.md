@@ -6,10 +6,10 @@ O **Analisador Semântico** (`semantic.py`) representa a **terceira fase** do pi
 
 ```mermaid
 graph TD
-    A[Código-Fonte Bruto] --> B[Analisador Léxico (lexer.py)]
-    B -->|Fluxo de Tokens| C[Analisador Sintático (parser_homi.py)]
-    C -->|AST (Árvore de Sintaxe Abstrata)| D[Analisador Semântico (semantic.py)]
-    D -->|AST Validada e Tabela de Símbolos| E[Gerador de Código (codegen.py)]
+    A[Código-Fonte Bruto] --> B[Analisador Léxico - lexer.py]
+    B -->|Fluxo de Tokens| C[Analisador Sintático - parser_homi.py]
+    C -->|AST - Árvore de Sintaxe Abstrata| D[Analisador Semântico - semantic.py]
+    D -->|AST Validada e Tabela de Símbolos| E[Gerador de Código - codegen.py]
 ```
 
 ### Responsabilidades Exatas:
@@ -17,7 +17,7 @@ Enquanto as fases anteriores (Léxica e Sintática) cuidam exclusivamente da **f
 
 Ele executa duas tarefas fundamentais:
 1. **Tabela de Símbolos:** Cataloga todas as entidades do Home Assistant encontradas no código-fonte e mapeia seus respectivos domínios (a parte antes do ponto, como `light` de `light.sala`). Isso garante um inventário estruturado dos recursos gerenciados.
-2. **Checagem de Tipos (Semântica Estática):** Impede inconsistências lógicas no controle de dispositivos. Por exemplo, a gramática aceita sintaticamente comandos como `LIGAR sensor.temperatura`. Contudo, semanticamente isso é um erro grave: sensores são dispositivos exclusivamente de **leitura** e não aceitam comandos de alteração de estado. O analisador semântico valida se as ações `LIGAR`/`DESLIGAR` são aplicadas estritamente a domínios classificados como **atuadores**.
+2. **Checagem de Tipos (Semântica Estática):** Impede inconsistências lógicas no controle de dispositivos. Por exemplo, a gramática aceita sintaticamente comandos como `- LIGAR sensor.temperatura`. Contudo, semanticamente isso é um erro grave: sensores são dispositivos exclusivamente de **leitura** e não aceitam comandos de alteração de estado. O analisador semântico valida se as ações `LIGAR`/`DESLIGAR` são aplicadas estritamente a domínios classificados como **atuadores**.
 
 ---
 
@@ -26,8 +26,8 @@ Ele executa duas tarefas fundamentais:
 O analisador é implementado através da classe `AnalisadorSemantico` utilizando o padrão de projeto **Visitor** para percorrer a AST de forma recursiva.
 
 ### A. Estruturas de Classificação de Domínios (Linhas 21-31)
-* **`DOMINIOS_ATUADORES`**: Um conjunto contendo os domínios do Home Assistant considerados válidos para receber ações de controle (`LIGAR`/`DESLIGAR`). Exemplos: `light`, `switch`, `fan`, `cover`, `climate`.
-* **`DOMINIOS_SENSORES`**: Um conjunto contendo domínios de sensores ou de leitura física. Embora declarados no código, eles são protegidos de tentativas de alteração direta. Exemplos: `sensor`, `binary_sensor`, `sun`, `weather`.
+* **`DOMINIOS_ATUADORES`**: Um conjunto contendo os domínios do Home Assistant considerados válidos para receber ações de controle (`LIGAR`/`DESLIGAR`). Exemplos: `light`, `switch`, `fan`, `cover`, `climate`, `vacuum`, `script`, `automation`, `input_boolean`, `scene`.
+* **`DOMINIOS_SENSORES`**: Um conjunto contendo domínios de sensores ou de leitura física. Embora declarados no código, eles são protegidos de tentativas de alteração direta. Exemplos: `sensor`, `binary_sensor`, `sun`, `weather`, `device_tracker`, `zone`, `person`.
 
 ### B. O Padrão Visitor e os Métodos de Análise
 
@@ -41,8 +41,10 @@ O analisador é implementado através da classe `AnalisadorSemantico` utilizando
 
 * **`_visitar_gatilho` (Linha 98) e `_visitar_condicao` (Linha 105):**
   * Registram todas as entidades encontradas nessas seções na Tabela de Símbolos usando a função `_registrar_entidade`.
+  * Tratam os tipos: `gatilho_estado`, `gatilho_numerico`, `condicao_estado` e `condicao_numerica`.
+  * Nota: `gatilho_evento` e `gatilho_horario`/`condicao_horario` não possuem entidades associadas, portanto nada é registrado.
 
-* **`_visitar_acao(self, no, automacao_nome)`** (Linha 109):
+* **`_visitar_acao(self, no, automacao_nome)`** (Linha 110):
   * **O que faz:** É onde a checagem de tipos de fato ocorre.
   * Se a ação for do tipo `acao_ligar` ou `acao_desligar`, o método:
     1. Registra a entidade na Tabela de Símbolos.
@@ -60,6 +62,7 @@ A Árvore de Sintaxe Abstrata (AST) gerada pelo analisador sintático. Exemplo d
     {
         'tipo': 'automacao',
         'nome': '"Alerta de Movimento"',
+        'modo': 'single',
         'gatilhos': [
             {'tipo': 'gatilho_estado', 'entidade': 'binary_sensor.porta', 'estado': '"on"'}
         ],
@@ -100,7 +103,7 @@ Preste atenção especial a estes pontos frágeis que podem motivar questionamen
 
 ### 🔍 Gargalo 1: Falta de Validação de Valores de Estado
 * **A Fragilidade:** O analisador semântico valida se você pode ligar/desligar um sensor, mas ele **não valida se os valores atribuídos às entidades fazem sentido**!
-* **Exemplo de bug aceito:** Se você escrever `QUANDO binary_sensor.porta ESTA "disarmed"`, a análise semântica aceitará isso de braços abertos, mesmo sabendo que um sensor binário só pode assumir os estados `"on"` ou `"off"`.
+* **Exemplo de bug aceito:** Se você escrever `- binary_sensor.porta ESTA "disarmed"`, a análise semântica aceitará isso de braços abertos, mesmo sabendo que um sensor binário só pode assumir os estados `"on"` ou `"off"`.
 * **Pergunta do professor:** *"Como você estenderia o analisador semântico para garantir que os estados informados sejam compatíveis com cada tipo de entidade?"*
 * **Sua resposta:** *"Nós criaríamos um dicionário auxiliar que mapeia os domínios para seus estados permitidos (ex: `{'binary_sensor': {'on', 'off'}}`). Durante a visita aos nós de gatilho e condição, extrairíamos o domínio da entidade e verificaríamos se o valor de estado fornecido no código fonte pertence ao conjunto de valores permitidos daquele domínio."*
 

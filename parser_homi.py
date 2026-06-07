@@ -282,7 +282,7 @@ def p_error(p):
     """
     Chamada pelo yacc quando encontra um token inesperado.
     Implementa Modo Pânico: descarta tokens até encontrar um ponto de
-    sincronização seguro (FIM, GATILHO, CONDICAO, ACAO, AUTOMACAO).
+    sincronização seguro (FIM, QUANDO, SE, FACA, AUTOMACAO).
     """
     if p is None:
         print("[ERRO SINTÁTICO] Fim inesperado do arquivo (EOF).")

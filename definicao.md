@@ -7,10 +7,12 @@ Este projeto é um compilador desenvolvido em **Python 3** utilizando a bibliote
 
 ### A. Analisador Léxico (Scanner)
 * **Ferramenta:** PLY (`ply.lex`)
-* **Tokens principais:** * Palavras-chave: `AUTOMACAO`, `GATILHO`, `CONDICAO`, `ACAO`, `QUANDO`, `SE`, `LIGAR`, `DESLIGAR`, `ESPERAR`, `FIM`, `ESTA`.
+* **Tokens principais:**
+  * Palavras-chave: `AUTOMACAO`, `MODO`, `QUANDO`, `SE`, `FACA` (aceita `FAÇA`), `LIGAR`, `DESLIGAR`, `ESPERAR`, `ESTA`, `FIM`, `ACIMA`, `ABAIXO`, `ENTRE`, `E`, `HORARIO`.
   * Identificadores: `ENTIDADE` (ex: `sensor.porta_sala`, `light.luz_teto`).
-  * Valores: `STRING` (ex: `"off"`, `"disarmed"`), `TEMPO` (ex: `10s`, `5min`), `EVENTO` (ex: `sunset`, `sunrise`).
-* **Tratamento:** Ignorar espaços em branco e quebras de linha, mas rastrear o número da linha (via `\n`) para reporte preciso de erros sintáticos/semânticos.
+  * Valores: `STRING` (ex: `"off"`, `"disarmed"`), `TEMPO` (ex: `10s`, `5min`, `1h`, `1min 45s`, `-01:30:00`), `EVENTO` (ex: `sunset`, `sunrise`), `NUMERO` (ex: `20`, `75`).
+  * Estruturais: `DOISPONTOS` (`:`), `TRACO` (`-`).
+* **Tratamento:** Ignorar espaços em branco e tabulações, descartar comentários (`# ...`), mas rastrear o número da linha (via `\n`) para reporte preciso de erros sintáticos/semânticos.
 
 ### B. Analisador Sintático (Parser)
 * **Ferramenta:** PLY (`ply.yacc`) operando como Tabela Preditiva LR.
@@ -18,19 +20,31 @@ Este projeto é um compilador desenvolvido em **Python 3** utilizando a bibliote
 * **Gramática Livre de Contexto (GLC) Base:**
   ```bnf
   <programa> ::= <automacao> | <programa> <automacao>
-  <automacao> ::= "AUTOMACAO" STRING <bloco_gatilho> <bloco_condicao> <bloco_acao> "FIM"
-  
-  <bloco_gatilho> ::= "GATILHO:" <lista_gatilhos>
+  <automacao> ::= "AUTOMACAO" STRING <bloco_modo> <bloco_gatilho> <bloco_condicao> <bloco_acao> "FIM"
+
+  <bloco_modo> ::= "MODO" EVENTO | ε
+
+  <bloco_gatilho> ::= "QUANDO" ":" <lista_gatilhos>
   <lista_gatilhos> ::= <comando_gatilho> | <lista_gatilhos> <comando_gatilho>
-  <comando_gatilho> ::= "QUANDO" EVENTO TEMPO | "QUANDO" ENTIDADE "ESTA" STRING
-  
-  <bloco_condicao> ::= "CONDICAO:" <lista_condicoes> | vazio
+  <comando_gatilho> ::= "-" EVENTO TEMPO
+                       | "-" ENTIDADE "ESTA" STRING
+                       | "-" ENTIDADE "ACIMA" NUMERO
+                       | "-" ENTIDADE "ABAIXO" NUMERO
+                       | "-" "HORARIO" "ENTRE" TEMPO "E" TEMPO
+
+  <bloco_condicao> ::= "SE" ":" <lista_condicoes> | ε
   <lista_condicoes> ::= <comando_condicao> | <lista_condicoes> <comando_condicao>
-  <comando_condicao> ::= "SE" ENTIDADE "ESTA" STRING
-  
-  <bloco_acao> ::= "ACAO:" <lista_acoes>
+  <comando_condicao> ::= "-" ENTIDADE "ESTA" STRING
+                        | "-" ENTIDADE "ACIMA" NUMERO
+                        | "-" ENTIDADE "ABAIXO" NUMERO
+                        | "-" "HORARIO" "ENTRE" TEMPO "E" TEMPO
+
+  <bloco_acao> ::= "FAÇA" ":" <lista_acoes>
   <lista_acoes> ::= <comando_acao> | <lista_acoes> <comando_acao>
-  <comando_acao> ::= "LIGAR" ENTIDADE | "DESLIGAR" ENTIDADE | "ESPERAR" TEMPO
+  <comando_acao> ::= "-" "LIGAR" ENTIDADE
+                    | "-" "DESLIGAR" ENTIDADE
+                    | "-" "ESPERAR" TEMPO
+  ```
 
 ### C. Analisador Semântico
 
@@ -47,19 +61,22 @@ Este projeto é um compilador desenvolvido em **Python 3** utilizando a bibliote
 
 **Entrada (Linguagem Homi):**
 
+```
 AUTOMACAO "Por do sol na Sala"
+MODO single
 
-GATILHO:
-    QUANDO sunset -01:30:00
+QUANDO:
+    - sunset -01:30:00
 
-CONDICAO:
-    SE alarm_control_panel.alarmo ESTA "disarmed"
-    SE light.sala ESTA "off"
+SE:
+    - alarm_control_panel.alarmo ESTA "disarmed"
+    - light.sala ESTA "off"
 
-ACAO:
-    LIGAR light.sala
-    ESPERAR 5min
-    DESLIGAR light.sala
+FAÇA:
+    - LIGAR light.sala
+    - ESPERAR 5min
+    - DESLIGAR light.sala
 FIM
+```
 
-**Saída Esperada (YAML):** O sistema deve mapear as palavras-chave para a estrutura de `platform`, `entity_id` e `services` correspondentes no Home Assistant.
+**Saída Esperada (YAML):** O sistema deve mapear as palavras-chave para a estrutura de `trigger`, `entity_id` e `action` correspondentes no Home Assistant.
