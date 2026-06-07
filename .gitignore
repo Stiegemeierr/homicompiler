@@ -1,1 +1,14 @@
-__pycache__
+# Cache Python
+__pycache__/
+
+# Arquivos gerados pelo PLY
+parser.out
+parsetab.py
+
+# Saídas de compilação (YAML gerado)
+*.yaml
+
+# Logs de teste
+lo
+log
+log_*

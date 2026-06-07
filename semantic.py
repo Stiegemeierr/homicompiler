@@ -22,12 +22,14 @@ class AnalisadorSemantico:
         'light', 'switch', 'fan', 'cover', 'lock',
         'media_player', 'climate', 'vacuum', 'script',
         'automation', 'input_boolean', 'scene',
+        'input_select', 'timer',
     }
 
     # Domínios de leitura — não aceitam LIGAR/DESLIGAR.
     DOMINIOS_SENSORES = {
         'sensor', 'binary_sensor', 'weather', 'sun',
         'device_tracker', 'zone', 'person',
+        'alarm_control_panel',
     }
 
     def __init__(self):

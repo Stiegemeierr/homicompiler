@@ -272,6 +272,7 @@ def p_automacao_erro(p):
     p[0] = {
         'tipo':      'automacao_com_erro',
         'nome':      p[2],
+        'modo':      'single',
         'gatilhos':  [],
         'condicoes': [],
         'acoes':     [],
@@ -307,7 +308,14 @@ def p_error(p):
             # Reinsere o token de sincronização para o parser consumir.
             parser.errok()
             parser.restart()
-            parser.token = lambda _tok=tok: _tok  # Injeta o token de volta.
+            # Injeta o token de volta de forma segura (one-shot).
+            # A lambda é substituída pelo método original após a primeira
+            # chamada, evitando loops infinitos caso o token reinjetado
+            # também cause um erro.
+            _original_token = parser.token
+            parser.token = lambda _tok=tok, _orig=_original_token: (
+                setattr(parser, 'token', _orig) or _tok
+            )
             break
 
 

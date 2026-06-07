@@ -3,7 +3,7 @@
 # Converte a AST validada da linguagem Homi para o formato automations.yaml.
 # =============================================================================
 
-import time
+import hashlib
 import re
 import yaml
 
@@ -24,9 +24,13 @@ class GeradorYAML:
     # -----------------------------------------------------------------
 
     @staticmethod
-    def _gerar_id() -> str:
-        """Gera um ID único baseado em timestamp (milissegundos)."""
-        return str(int(time.time() * 1000))
+    def _gerar_id(nome: str) -> str:
+        """Gera um ID determinístico baseado no nome da automação.
+        Usa MD5 truncado para 13 dígitos numéricos, garantindo que
+        compilações idênticas produzam IDs idênticos."""
+        hash_hex = hashlib.md5(nome.encode('utf-8')).hexdigest()
+        # Converte os primeiros 13 caracteres hex para inteiro decimal.
+        return str(int(hash_hex[:13], 16))
 
     @staticmethod
     def _extrair_dominio(entidade: str) -> str:
@@ -105,7 +109,7 @@ class GeradorYAML:
     def _gerar_automacao(self, no: dict) -> dict:
         """Converte um nó de automação da AST para o formato HA."""
         return {
-            'id':          self._gerar_id(),
+            'id':          self._gerar_id(no['nome']),
             'alias':       self._limpar_string(no['nome']),
             'description': '',
             'triggers':    self._gerar_triggers(no.get('gatilhos', [])),
