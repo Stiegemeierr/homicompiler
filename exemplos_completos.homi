@@ -93,7 +93,6 @@ QUANDO:
 
 FAÇA:
 - DESLIGAR switch.6a55b660d511de43c42b534c2f201dbb
-- LIGAR notify.mobile_app_zfold4
 FIM
 
 
@@ -105,7 +104,6 @@ QUANDO:
 
 FAÇA:
 - LIGAR switch.6a55b660d511de43c42b534c2f201dbb
-- LIGAR notify.mobile_app_zfold4
 FIM
 
 
@@ -117,7 +115,6 @@ QUANDO:
 
 FAÇA:
 - LIGAR switch.6a55b660d511de43c42b534c2f201dbb
-- LIGAR notify.mobile_app_zfold4
 FIM
 
 
@@ -163,7 +160,6 @@ FAÇA:
 - DESLIGAR switch.luzes_da_sala
 - DESLIGAR switch.luzes_do_lavabo
 - DESLIGAR switch.cozinha_nichos_led_interruptor_1
-- LIGAR alexa_devices.send_text_command
 - DESLIGAR media_player.music_frame_2
 - DESLIGAR media_player.music_frame
 - DESLIGAR media_player.nestmini0550
@@ -247,7 +243,6 @@ FAÇA:
 - DESLIGAR switch.sonoff_100200129d_2
 - DESLIGAR switch.sonoff_100200129d_1
 - DESLIGAR switch.espelho_do_lavabo
-- LIGAR notify.mobile_app_zfold4
 FIM
 
 
@@ -344,7 +339,6 @@ SE:
 
 FAÇA:
 - LIGAR switch.ilha_interruptor_1
-- LIGAR notify.mobile_app_zfold4
 - ESPERAR 4min
 - DESLIGAR switch.ilha_interruptor_1
 - DESLIGAR switch.sonoff_1001887e06_2
