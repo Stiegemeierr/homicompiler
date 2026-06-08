@@ -93,7 +93,7 @@ QUANDO:
 
 FAÇA:
 - DESLIGAR switch.6a55b660d511de43c42b534c2f201dbb
-- LIGAR script.notificar_descarregando
+- LIGAR notify.mobile_app_zfold4
 FIM
 
 
@@ -105,7 +105,7 @@ QUANDO:
 
 FAÇA:
 - LIGAR switch.6a55b660d511de43c42b534c2f201dbb
-- LIGAR script.notificar_carregando
+- LIGAR notify.mobile_app_zfold4
 FIM
 
 
@@ -117,7 +117,7 @@ QUANDO:
 
 FAÇA:
 - LIGAR switch.6a55b660d511de43c42b534c2f201dbb
-- LIGAR script.notificar_carregando_critico
+- LIGAR notify.mobile_app_zfold4
 FIM
 
 
@@ -163,7 +163,7 @@ FAÇA:
 - DESLIGAR switch.luzes_da_sala
 - DESLIGAR switch.luzes_do_lavabo
 - DESLIGAR switch.cozinha_nichos_led_interruptor_1
-- LIGAR script.comando_alexa_desligar_tela
+- LIGAR alexa_devices.send_text_command
 - DESLIGAR media_player.music_frame_2
 - DESLIGAR media_player.music_frame
 - DESLIGAR media_player.nestmini0550
@@ -183,7 +183,7 @@ SE:
 - alarm_control_panel.alarmo ESTA "disarmed"
 
 FAÇA:
-- LIGAR script.timer_closet_start
+- LIGAR timer.closet
 FIM
 
 
@@ -247,7 +247,7 @@ FAÇA:
 - DESLIGAR switch.sonoff_100200129d_2
 - DESLIGAR switch.sonoff_100200129d_1
 - DESLIGAR switch.espelho_do_lavabo
-- LIGAR script.notificar_celular
+- LIGAR notify.mobile_app_zfold4
 FIM
 
 
@@ -280,7 +280,11 @@ FAÇA:
 - DESLIGAR switch.sonoff_10018dee48_1
 - DESLIGAR switch.luzes_da_suite
 - LIGAR switch.bb97c45f407329aca067d3f274499a81
-- LIGAR script.timer_finish_all
+- DESLIGAR timer.quarto_eric
+- DESLIGAR timer.corredor
+- DESLIGAR timer.quarto_nicole
+- DESLIGAR timer.closet
+- DESLIGAR timer.banho_nicole
 - DESLIGAR light.fita_led_rgb_5m
 FIM
 
@@ -340,7 +344,7 @@ SE:
 
 FAÇA:
 - LIGAR switch.ilha_interruptor_1
-- LIGAR script.notificar_celular
+- LIGAR notify.mobile_app_zfold4
 - ESPERAR 4min
 - DESLIGAR switch.ilha_interruptor_1
 - DESLIGAR switch.sonoff_1001887e06_2
@@ -418,7 +422,7 @@ SE:
 - alarm_control_panel.alarmo ESTA "disarmed"
 
 FAÇA:
-- LIGAR script.iniciar_timer_nicole
+- LIGAR timer.quarto_nicole
 FIM
 
 

@@ -1,4 +1,4 @@
-- id: '1780682652189'
+- id: '4471034670598130'
   alias: Corda Corredor - movimento (Madrugada)
   description: ''
   triggers:
@@ -50,7 +50,7 @@
     target:
       entity_id: light.a4595b3013d5c452494f933e1e104129
   mode: restart
-- id: '1780682652189'
+- id: '241403045211517'
   alias: Corda Corredor - movimento (Dia)
   description: ''
   triggers:
@@ -102,7 +102,7 @@
     target:
       entity_id: light.a4595b3013d5c452494f933e1e104129
   mode: restart
-- id: '1780682652189'
+- id: '2482103427469010'
   alias: Por do Sol - Chuva
   description: ''
   triggers:
@@ -129,7 +129,7 @@
     target:
       entity_id: automation.cozinha_ligar_luzes
   mode: single
-- id: '1780682652189'
+- id: '2392787623964718'
   alias: Por do Sol - Nublado
   description: ''
   triggers:
@@ -160,7 +160,7 @@
     target:
       entity_id: automation.cozinha_ligar_luzes
   mode: single
-- id: '1780682652189'
+- id: '1804706138071510'
   alias: Por do Sol - Sol
   description: ''
   triggers:
@@ -179,7 +179,7 @@
     target:
       entity_id: automation.cozinha_ligar_luzes
   mode: single
-- id: '1780682652189'
+- id: '3949719891197744'
   alias: Tablet - carregador (Cheio)
   description: ''
   triggers:
@@ -194,13 +194,13 @@
     data: {}
     target:
       entity_id: switch.6a55b660d511de43c42b534c2f201dbb
-  - action: script.turn_on
+  - action: notify.turn_on
     metadata: {}
     data: {}
     target:
-      entity_id: script.notificar_descarregando
+      entity_id: notify.mobile_app_zfold4
   mode: single
-- id: '1780682652189'
+- id: '2156953257203885'
   alias: Tablet - carregador (Baixo)
   description: ''
   triggers:
@@ -215,13 +215,13 @@
     data: {}
     target:
       entity_id: switch.6a55b660d511de43c42b534c2f201dbb
-  - action: script.turn_on
+  - action: notify.turn_on
     metadata: {}
     data: {}
     target:
-      entity_id: script.notificar_carregando
+      entity_id: notify.mobile_app_zfold4
   mode: single
-- id: '1780682652189'
+- id: '3522741934337076'
   alias: Tablet - carregador (Critico)
   description: ''
   triggers:
@@ -236,13 +236,13 @@
     data: {}
     target:
       entity_id: switch.6a55b660d511de43c42b534c2f201dbb
-  - action: script.turn_on
+  - action: notify.turn_on
     metadata: {}
     data: {}
     target:
-      entity_id: script.notificar_carregando_critico
+      entity_id: notify.mobile_app_zfold4
   mode: single
-- id: '1780682652189'
+- id: '2144800888373813'
   alias: Nicole - LED da TV (Ativar)
   description: ''
   triggers:
@@ -263,7 +263,7 @@
     target:
       entity_id: switch.d8598c0f4effd9848ca64cd9981f14f9
   mode: single
-- id: '1780682652189'
+- id: '3657941453749447'
   alias: Nicole - LED da TV (Desativar)
   description: ''
   triggers:
@@ -284,7 +284,7 @@
     target:
       entity_id: switch.d8598c0f4effd9848ca64cd9981f14f9
   mode: single
-- id: '1780682652189'
+- id: '1644109371813490'
   alias: Sala - desligar luzes NSPanel
   description: ''
   triggers:
@@ -318,11 +318,11 @@
     data: {}
     target:
       entity_id: switch.cozinha_nichos_led_interruptor_1
-  - action: script.turn_on
+  - action: alexa_devices.turn_on
     metadata: {}
     data: {}
     target:
-      entity_id: script.comando_alexa_desligar_tela
+      entity_id: alexa_devices.send_text_command
   - action: media_player.turn_off
     metadata: {}
     data: {}
@@ -349,7 +349,7 @@
     target:
       entity_id: media_player.tx_nr5100
   mode: single
-- id: '1780682652189'
+- id: '4438663323926865'
   alias: Closet - movimento (Detectado)
   description: ''
   triggers:
@@ -369,13 +369,13 @@
     state:
     - disarmed
   actions:
-  - action: script.turn_on
+  - action: timer.turn_on
     metadata: {}
     data: {}
     target:
-      entity_id: script.timer_closet_start
+      entity_id: timer.closet
   mode: restart
-- id: '1780682652189'
+- id: '2185140187641080'
   alias: Closet - movimento (Ligar Luz)
   description: ''
   triggers:
@@ -409,7 +409,7 @@
     target:
       entity_id: switch.e6bd5f71286d23ea1c87b580aea4407c
   mode: restart
-- id: '1780682652189'
+- id: '3286969954525694'
   alias: Closet - movimento (Ocioso)
   description: ''
   triggers:
@@ -430,7 +430,7 @@
     target:
       entity_id: switch.e6bd5f71286d23ea1c87b580aea4407c
   mode: restart
-- id: '1780682652189'
+- id: '1926885938228859'
   alias: Lavabo - 3o botao interruptor (Liga)
   description: ''
   triggers:
@@ -456,7 +456,7 @@
     target:
       entity_id: switch.sonoff_100200129d_2
   mode: restart
-- id: '1780682652189'
+- id: '3095046122565549'
   alias: Lavabo - 3o botao interruptor (Desliga)
   description: ''
   triggers:
@@ -491,13 +491,13 @@
     data: {}
     target:
       entity_id: switch.espelho_do_lavabo
-  - action: script.turn_on
+  - action: notify.turn_on
     metadata: {}
     data: {}
     target:
-      entity_id: script.notificar_celular
+      entity_id: notify.mobile_app_zfold4
   mode: restart
-- id: '1780682652189'
+- id: '1478968117732476'
   alias: Suite - botao Dani (Single Liga)
   description: ''
   triggers:
@@ -518,7 +518,7 @@
     target:
       entity_id: light.arandela_suite
   mode: single
-- id: '1780682652189'
+- id: '2306387755640751'
   alias: Suite - botao Dani (Single Desliga)
   description: ''
   triggers:
@@ -558,18 +558,38 @@
     data: {}
     target:
       entity_id: switch.bb97c45f407329aca067d3f274499a81
-  - action: script.turn_on
+  - action: timer.turn_off
     metadata: {}
     data: {}
     target:
-      entity_id: script.timer_finish_all
+      entity_id: timer.quarto_eric
+  - action: timer.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: timer.corredor
+  - action: timer.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: timer.quarto_nicole
+  - action: timer.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: timer.closet
+  - action: timer.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: timer.banho_nicole
   - action: light.turn_off
     metadata: {}
     data: {}
     target:
       entity_id: light.fita_led_rgb_5m
   mode: single
-- id: '1780682652189'
+- id: '3510977247610554'
   alias: Suite - botao Dani (Double)
   description: ''
   triggers:
@@ -586,7 +606,7 @@
     target:
       entity_id: switch.luzes_da_suite
   mode: single
-- id: '1780682652189'
+- id: '1840501763626301'
   alias: Sala - NSPanel controla painel LED TV (Liga)
   description: ''
   triggers:
@@ -607,7 +627,7 @@
     target:
       entity_id: switch.sonoff_1001e0dd5a_1
   mode: single
-- id: '1780682652189'
+- id: '2191991398056305'
   alias: Sala - NSPanel controla painel LED TV (Desliga)
   description: ''
   triggers:
@@ -628,7 +648,7 @@
     target:
       entity_id: switch.sonoff_1001e0dd5a_1
   mode: single
-- id: '1780682652189'
+- id: '2912627475574944'
   alias: Sala - movimento noturno
   description: ''
   triggers:
@@ -668,11 +688,11 @@
     data: {}
     target:
       entity_id: switch.ilha_interruptor_1
-  - action: script.turn_on
+  - action: notify.turn_on
     metadata: {}
     data: {}
     target:
-      entity_id: script.notificar_celular
+      entity_id: notify.mobile_app_zfold4
   - delay:
       hours: 0
       minutes: 4
@@ -689,7 +709,7 @@
     target:
       entity_id: switch.sonoff_1001887e06_2
   mode: single
-- id: '1780682652189'
+- id: '3451735094954907'
   alias: Corredor - chave hotel (Tuya OFF)
   description: ''
   triggers:
@@ -706,7 +726,7 @@
     target:
       entity_id: switch.dac219311283b7d5262d710d8f61b278
   mode: single
-- id: '1780682652189'
+- id: '224631944432265'
   alias: Corredor - chave hotel (Tuya ON)
   description: ''
   triggers:
@@ -723,7 +743,7 @@
     target:
       entity_id: switch.dac219311283b7d5262d710d8f61b278
   mode: single
-- id: '1780682652189'
+- id: '1020140432161091'
   alias: Corredor - chave hotel (Sonoff OFF)
   description: ''
   triggers:
@@ -740,7 +760,7 @@
     target:
       entity_id: switch.73bd5ca47e3ec3a9bc6a463e0ae0dc98
   mode: single
-- id: '1780682652189'
+- id: '2991153246888937'
   alias: Corredor - chave hotel (Sonoff ON)
   description: ''
   triggers:
@@ -757,7 +777,7 @@
     target:
       entity_id: switch.73bd5ca47e3ec3a9bc6a463e0ae0dc98
   mode: single
-- id: '1780682652189'
+- id: '347170813347787'
   alias: Suite - ligar toalheiro
   description: ''
   triggers:
@@ -792,7 +812,7 @@
     target:
       entity_id: switch.5e57f3722928049f33c44caf233138cd
   mode: single
-- id: '1780682652189'
+- id: '2695330744864167'
   alias: Nicole - movimento (Detectado Start)
   description: ''
   triggers:
@@ -807,13 +827,13 @@
     state:
     - disarmed
   actions:
-  - action: script.turn_on
+  - action: timer.turn_on
     metadata: {}
     data: {}
     target:
-      entity_id: script.iniciar_timer_nicole
+      entity_id: timer.quarto_nicole
   mode: restart
-- id: '1780682652189'
+- id: '1687619929040818'
   alias: Sala - desligar LED sanca
   description: ''
   triggers:
@@ -827,7 +847,7 @@
     target:
       entity_id: light.973148b62067d63a345f9c1cd90436fb
   mode: single
-- id: '1780682652189'
+- id: '4050655468559912'
   alias: Cozinha - desligar luzes
   description: ''
   triggers:
@@ -879,7 +899,7 @@
     target:
       entity_id: switch.2a3fe028eb0da3f11e73437fe3b34b5d
   mode: single
-- id: '1780682652189'
+- id: '3416402315237830'
   alias: Suite - cortinas (Abrir)
   description: ''
   triggers:
@@ -897,7 +917,7 @@
     target:
       entity_id: cover.8e38e2f9b76939a6c380fad9428f1fd0
   mode: single
-- id: '1780682652189'
+- id: '3994225348724258'
   alias: Suite - cortinas (Fechar)
   description: ''
   triggers:
@@ -915,7 +935,7 @@
     target:
       entity_id: cover.8e38e2f9b76939a6c380fad9428f1fd0
   mode: single
-- id: '1780682652189'
+- id: '3360862318723948'
   alias: Suite - escova Oral-B (Idle)
   description: ''
   triggers:
@@ -932,7 +952,7 @@
     target:
       entity_id: light.1f44a726233f4ea71a519484b6d6e1da
   mode: single
-- id: '1780682652189'
+- id: '2411458415946879'
   alias: Suite - escova Oral-B (Running)
   description: ''
   triggers:

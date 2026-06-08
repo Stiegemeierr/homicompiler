@@ -22,7 +22,7 @@ class AnalisadorSemantico:
         'light', 'switch', 'fan', 'cover', 'lock',
         'media_player', 'climate', 'vacuum', 'script',
         'automation', 'input_boolean', 'scene',
-        'input_select', 'timer',
+        'input_select', 'timer', 'notify', 'alexa_devices',
     }
 
     # Domínios de leitura — não aceitam LIGAR/DESLIGAR.

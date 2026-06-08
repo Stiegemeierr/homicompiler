@@ -3,7 +3,7 @@
 ======================================================================
 
 Arquivo de entrada: exemplos_completos.homi
-Arquivo de saida:   output.yaml
+Arquivo de saida:   outputs.yaml
 
 [1/4] Analise Lexica + Sintatica...
       -> 34 automacao(oes) encontrada(s).
@@ -18,7 +18,6 @@ Tabela de Símbolos:
   switch.bb97c45f407329aca067d3f274499a81 switch    
   alarm_control_panel.37dc24654a788314bfb4de2e2c827fd0 alarm_control_panel
   light.corda_led_corredor            light     
-  sensor.horario                      sensor    
   light.a4595b3013d5c452494f933e1e104129 light     
   alarm_control_panel.alarmo          alarm_control_panel
   weather.forecast_casa               weather   
@@ -26,9 +25,7 @@ Tabela de Símbolos:
   switch.eff0606bc3425bb3266f319ae937d810 switch    
   sensor.d46e6d632a36b57b7c07b1885c32ad88 sensor    
   switch.6a55b660d511de43c42b534c2f201dbb switch    
-  script.notificar_descarregando      script    
-  script.notificar_carregando         script    
-  script.notificar_carregando_critico script    
+  notify.mobile_app_zfold4            notify    
   switch.e26d13dc064b552d0c4c5b1401328d9a switch    
   switch.d8598c0f4effd9848ca64cd9981f14f9 switch    
   switch.b2b332adfb28616f2a8a705c922f6ead switch    
@@ -36,7 +33,7 @@ Tabela de Símbolos:
   switch.luzes_da_sala                switch    
   switch.luzes_do_lavabo              switch    
   switch.cozinha_nichos_led_interruptor_1 switch    
-  script.comando_alexa_desligar_tela  script    
+  alexa_devices.send_text_command     alexa_devices
   media_player.music_frame_2          media_player
   media_player.music_frame            media_player
   media_player.nestmini0550           media_player
@@ -44,21 +41,23 @@ Tabela de Símbolos:
   media_player.tx_nr5100              media_player
   sensor.timer_closet                 sensor    
   binary_sensor.1e1e192bce0cdc593a3e72dc6e996b46 binary_sensor
-  script.timer_closet_start           script    
+  timer.closet                        timer     
   switch.e6bd5f71286d23ea1c87b580aea4407c switch    
   switch.8aa7f9cf78ad1d62f4df88ca2360df73 switch    
   switch.espelho_do_lavabo            switch    
   switch.sonoff_100200129d_2          switch    
   switch.sonoff_100200129d_3          switch    
   switch.sonoff_100200129d_1          switch    
-  script.notificar_celular            script    
   sensor.sonoff_a440016554            sensor    
   switch.luzes_da_suite               switch    
   light.arandela_suite                light     
   switch.luzes_da_nicole              switch    
   switch.luzes_do_eric                switch    
   switch.sonoff_10018dee48_1          switch    
-  script.timer_finish_all             script    
+  timer.quarto_eric                   timer     
+  timer.corredor                      timer     
+  timer.quarto_nicole                 timer     
+  timer.banho_nicole                  timer     
   light.fita_led_rgb_5m               light     
   switch.2a3fe028eb0da3f11e73437fe3b34b5d switch    
   switch.sonoff_1001e0dd5a_1          switch    
@@ -73,7 +72,6 @@ Tabela de Símbolos:
   switch.f3669be2d38feb3b98c2d8c46ff1b0c6 switch    
   switch.5e57f3722928049f33c44caf233138cd switch    
   binary_sensor.tze200_3towulqd_ts0601_ocupacao binary_sensor
-  script.iniciar_timer_nicole         script    
   light.973148b62067d63a345f9c1cd90436fb light     
   sensor.evento                       sensor    
   light.d51d48f52a856d2a87a080b71d23ff20 light     
@@ -87,11 +85,28 @@ Tabela de Símbolos:
   sensor.triumph_v2_90f2              sensor    
   light.1f44a726233f4ea71a519484b6d6e1da light     
 ---------------------------------------------
-      -> Nenhum erro semantico.
-[3/4] Geracao de Codigo YAML...
-[4/4] Salvando arquivo de saida: output.yaml
-[OK] Arquivo salvo em: output.yaml
+
+[ERRO SEMÂNTICO] 6 erro(s) encontrado(s):
+----------------------------------------------------------------------
+  1. Automação: "Tablet - carregador (Cheio)"
+     -> Ação 'LIGAR' inválida para a entidade 'notify.mobile_app_zfold4'. O domínio 'notify' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
+  2. Automação: "Tablet - carregador (Baixo)"
+     -> Ação 'LIGAR' inválida para a entidade 'notify.mobile_app_zfold4'. O domínio 'notify' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
+  3. Automação: "Tablet - carregador (Critico)"
+     -> Ação 'LIGAR' inválida para a entidade 'notify.mobile_app_zfold4'. O domínio 'notify' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
+  4. Automação: "Sala - desligar luzes NSPanel"
+     -> Ação 'LIGAR' inválida para a entidade 'alexa_devices.send_text_command'. O domínio 'alexa_devices' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
+  5. Automação: "Lavabo - 3o botao interruptor (Desliga)"
+     -> Ação 'LIGAR' inválida para a entidade 'notify.mobile_app_zfold4'. O domínio 'notify' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
+  6. Automação: "Sala - movimento noturno"
+     -> Ação 'LIGAR' inválida para a entidade 'notify.mobile_app_zfold4'. O domínio 'notify' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
+----------------------------------------------------------------------
+
+[ERRO] Erros semanticos encontrados.
+
+[ERRO FATAL] Foram encontrados erros nas etapas anteriores.
+Compilacao abortada. A geracao de codigo YAML foi desativada.
 
 ======================================================================
-  Compilacao concluida com sucesso!
+  Compilacao finalizada com erros.
 ======================================================================
