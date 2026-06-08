@@ -215,7 +215,12 @@ class GeradorYAML:
         for a in acoes:
             if a['tipo'] == 'acao_ligar':
                 dominio = self._extrair_dominio(a['entidade'])
-                action_str = f"{dominio}.open" if dominio == 'cover' else f"{dominio}.turn_on"
+                if dominio == 'cover':
+                    action_str = f"{dominio}.open"
+                elif dominio == 'automation':
+                    action_str = f"{dominio}.trigger"
+                else:
+                    action_str = f"{dominio}.turn_on"
                 # Schema HA: {action: <dominio>.turn_on, data: {}, target: {entity_id: ...}}
                 actions.append({
                     'action':   action_str,
