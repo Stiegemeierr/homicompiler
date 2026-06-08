@@ -85,28 +85,11 @@ Tabela de Símbolos:
   sensor.triumph_v2_90f2              sensor    
   light.1f44a726233f4ea71a519484b6d6e1da light     
 ---------------------------------------------
-
-[ERRO SEMÂNTICO] 6 erro(s) encontrado(s):
-----------------------------------------------------------------------
-  1. Automação: "Tablet - carregador (Cheio)"
-     -> Ação 'LIGAR' inválida para a entidade 'notify.mobile_app_zfold4'. O domínio 'notify' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
-  2. Automação: "Tablet - carregador (Baixo)"
-     -> Ação 'LIGAR' inválida para a entidade 'notify.mobile_app_zfold4'. O domínio 'notify' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
-  3. Automação: "Tablet - carregador (Critico)"
-     -> Ação 'LIGAR' inválida para a entidade 'notify.mobile_app_zfold4'. O domínio 'notify' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
-  4. Automação: "Sala - desligar luzes NSPanel"
-     -> Ação 'LIGAR' inválida para a entidade 'alexa_devices.send_text_command'. O domínio 'alexa_devices' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
-  5. Automação: "Lavabo - 3o botao interruptor (Desliga)"
-     -> Ação 'LIGAR' inválida para a entidade 'notify.mobile_app_zfold4'. O domínio 'notify' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
-  6. Automação: "Sala - movimento noturno"
-     -> Ação 'LIGAR' inválida para a entidade 'notify.mobile_app_zfold4'. O domínio 'notify' é de leitura e não aceita comandos de estado. Domínios válidos: automation, climate, cover, fan, input_boolean, input_select, light, lock, media_player, scene, script, switch, timer, vacuum.
-----------------------------------------------------------------------
-
-[ERRO] Erros semanticos encontrados.
-
-[ERRO FATAL] Foram encontrados erros nas etapas anteriores.
-Compilacao abortada. A geracao de codigo YAML foi desativada.
+      -> Nenhum erro semantico.
+[3/4] Geracao de Codigo YAML...
+[4/4] Salvando arquivo de saida: outputs.yaml
+[OK] Arquivo salvo em: outputs.yaml
 
 ======================================================================
-  Compilacao finalizada com erros.
+  Compilacao concluida com sucesso!
 ======================================================================

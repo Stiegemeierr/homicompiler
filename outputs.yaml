@@ -911,7 +911,7 @@
     state:
     - disarmed
   actions:
-  - action: cover.turn_on
+  - action: cover.open
     metadata: {}
     data: {}
     target:
@@ -929,7 +929,7 @@
     state:
     - disarmed
   actions:
-  - action: cover.turn_off
+  - action: cover.close
     metadata: {}
     data: {}
     target:
