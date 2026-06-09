@@ -20,19 +20,19 @@ clean:
 
 # Executa apenas o lexer para depuracao de tokens.
 lex:
-	$(PYTHON) lexer.py
+	$(PYTHON) fase1_lexer.py
 
 # Executa apenas o parser para depuracao da AST.
 parse:
-	$(PYTHON) parser_homi.py
+	$(PYTHON) fase2_parser.py
 
 # Executa apenas o analisador semantico com mock.
 semantic:
-	$(PYTHON) semantic.py
+	$(PYTHON) fase3_semantic.py
 
 # Executa apenas o gerador de codigo com mock.
 codegen:
-	$(PYTHON) codegen.py
+	$(PYTHON) fase4_codegen.py
 
 # Mostra ajuda do compilador.
 help:

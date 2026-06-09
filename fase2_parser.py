@@ -6,7 +6,7 @@
 import ply.yacc as yacc
 
 # Importa os tokens definidos no lexer (obrigatório para o PLY).
-from lexer import tokens, lexer  # noqa: F401 — 'tokens' é usado implicitamente pelo yacc
+from fase1_lexer import tokens, lexer  # noqa: F401 — 'tokens' é usado implicitamente pelo yacc
 
 # =============================================================================
 # GRAMÁTICA — Regras de produção mapeadas da GLC (definicao.md, seção 2.B)

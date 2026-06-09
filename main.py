@@ -6,10 +6,10 @@
 import sys
 import argparse
 
-from lexer import lexer
-from parser_homi import parser
-from semantic import AnalisadorSemantico
-from codegen import GeradorYAML
+from fase1_lexer import lexer
+from fase2_parser import parser
+from fase3_semantic import AnalisadorSemantico
+from fase4_codegen import GeradorYAML
 
 
 def compilar(codigo_fonte: str, arquivo_saida: str) -> bool:
