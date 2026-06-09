@@ -34,6 +34,7 @@ reserved = {
 # -----------------------------------------------------------------------------
 tokens = (
     # --- Tokens dinâmicos ---
+    'IDENTIFICADOR',# ex: single, restart, etc.
     'ENTIDADE',     # ex: sensor.porta_sala, light.luz_1
     'STRING',       # ex: "off", "disarmed"
     'EVENTO',       # ex: sunset, sunrise
@@ -109,9 +110,8 @@ def t_PALAVRA(t):
     # Se estiver no dicionário de palavras-chave, retorna o token correto.
     # Caso contrário, é um erro léxico (identificadores genéricos não são
     # parte da linguagem Homi nesta versão).
-    t.type = reserved.get(t.value, 'EVENTO')
-    # Se não for reservada, trata como EVENTO genérico (para extensibilidade).
-    # Caso deseje rejeitar palavras desconhecidas, troque por um t_error.
+    t.type = reserved.get(t.value, 'IDENTIFICADOR')
+    # Se não for reservada, trata como IDENTIFICADOR genérico.
     return t
 
 

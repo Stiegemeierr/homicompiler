@@ -43,7 +43,7 @@ def p_automacao(p):
     }
 
 def p_bloco_modo(p):
-    '''bloco_modo : MODO EVENTO'''
+    '''bloco_modo : MODO IDENTIFICADOR'''
     p[0] = p[2]
 
 def p_bloco_modo_vazio(p):

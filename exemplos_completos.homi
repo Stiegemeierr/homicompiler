@@ -1,25 +1,60 @@
-AUTOMACAO "Corda Corredor - movimento (Madrugada)"
-MODO restart
+AUTOMACAO "Nivel 1: Simples (1 Gatilho, 1 Acao)"
+MODO single
 
 QUANDO:
-- binary_sensor.corredor_suite_luminance_motion_sensor_movimento ESTA "on"
-- binary_sensor.tz3000_6ygjfyll_ts0202 ESTA "on"
-- binary_sensor.motion_sensor_movimento ESTA "on"
-
-SE:
-- switch.bb97c45f407329aca067d3f274499a81 ESTA "on"
-- alarm_control_panel.37dc24654a788314bfb4de2e2c827fd0 ESTA "disarmed"
-- light.corda_led_corredor ESTA "off"
-- HORARIO ENTRE 01:15:00 E 12:00:00
+- sensor.triumph_v2_90f2 ESTA "running"
 
 FAÇA:
-- LIGAR light.a4595b3013d5c452494f933e1e104129
-- ESPERAR 45s
-- DESLIGAR light.a4595b3013d5c452494f933e1e104129
+- LIGAR light.1f44a726233f4ea71a519484b6d6e1da
 FIM
 
 
-AUTOMACAO "Corda Corredor - movimento (Dia)"
+AUTOMACAO "Nivel 2: Multiplas Acoes (1 Gatilho, Varias Acoes)"
+MODO single
+
+QUANDO:
+- sensor.evento ESTA "manual"
+
+FAÇA:
+- DESLIGAR light.d51d48f52a856d2a87a080b71d23ff20
+- DESLIGAR light.07ee905d710ace9fac2d8121924bcd15
+- DESLIGAR switch.976f5231d4889cf3165bc14dc157bbef
+- DESLIGAR switch.be630987e593594bf93e47138507f2f1
+FIM
+
+
+AUTOMACAO "Nivel 3: Condicoes e Eventos (Solar + Condicao de Estado)"
+MODO single
+
+QUANDO:
+- sunset -00:45:00
+
+SE:
+- alarm_control_panel.alarmo ESTA "disarmed"
+
+FAÇA:
+- LIGAR automation.cozinha_ligar_luzes
+FIM
+
+
+AUTOMACAO "Nivel 4: Tempo e Espera (Multiplos Gatilhos + Horario + Esperar)"
+MODO single
+
+QUANDO:
+- switch.57b28338c5ca8de7d7763d4539ce4e07 ESTA "on"
+- switch.f3669be2d38feb3b98c2d8c46ff1b0c6 ESTA "on"
+
+SE:
+- HORARIO ENTRE 15:00:00 E 23:59:00
+
+FAÇA:
+- LIGAR switch.5e57f3722928049f33c44caf233138cd
+- ESPERAR 35min
+- DESLIGAR switch.5e57f3722928049f33c44caf233138cd
+FIM
+
+
+AUTOMACAO "Nivel 5: Avancado (Modo Restart + Tudo Misturado)"
 MODO restart
 
 QUANDO:
@@ -37,463 +72,4 @@ FAÇA:
 - LIGAR light.a4595b3013d5c452494f933e1e104129
 - ESPERAR 1min 45s
 - DESLIGAR light.a4595b3013d5c452494f933e1e104129
-FIM
-
-
-AUTOMACAO "Por do Sol - Chuva"
-MODO single
-
-QUANDO:
-- sunset -01:30:00
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-- weather.forecast_casa ESTA "rainy, pouring, lightning-rainy, hail, snowy"
-
-FAÇA:
-- LIGAR automation.cozinha_ligar_luzes
-FIM
-
-
-AUTOMACAO "Por do Sol - Nublado"
-MODO single
-
-QUANDO:
-- sunset -01:15:00
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-- weather.forecast_casa ESTA "cloudy, windy-variant, fog, partlycloudy, windy"
-- switch.eff0606bc3425bb3266f319ae937d810 ESTA "off"
-
-FAÇA:
-- LIGAR automation.cozinha_ligar_luzes
-FIM
-
-
-AUTOMACAO "Por do Sol - Sol"
-MODO single
-
-QUANDO:
-- sunset -00:45:00
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-
-FAÇA:
-- LIGAR automation.cozinha_ligar_luzes
-FIM
-
-
-AUTOMACAO "Tablet - carregador (Cheio)"
-MODO single
-
-QUANDO:
-- sensor.d46e6d632a36b57b7c07b1885c32ad88 ACIMA 75
-
-FAÇA:
-- DESLIGAR switch.6a55b660d511de43c42b534c2f201dbb
-FIM
-
-
-AUTOMACAO "Tablet - carregador (Baixo)"
-MODO single
-
-QUANDO:
-- sensor.d46e6d632a36b57b7c07b1885c32ad88 ABAIXO 20
-
-FAÇA:
-- LIGAR switch.6a55b660d511de43c42b534c2f201dbb
-FIM
-
-
-AUTOMACAO "Tablet - carregador (Critico)"
-MODO single
-
-QUANDO:
-- sensor.d46e6d632a36b57b7c07b1885c32ad88 ABAIXO 5
-
-FAÇA:
-- LIGAR switch.6a55b660d511de43c42b534c2f201dbb
-FIM
-
-
-AUTOMACAO "Nicole - LED da TV (Ativar)"
-MODO single
-
-QUANDO:
-- switch.e26d13dc064b552d0c4c5b1401328d9a ESTA "on"
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-
-FAÇA:
-- LIGAR switch.d8598c0f4effd9848ca64cd9981f14f9
-FIM
-
-
-AUTOMACAO "Nicole - LED da TV (Desativar)"
-MODO single
-
-QUANDO:
-- switch.e26d13dc064b552d0c4c5b1401328d9a ESTA "off"
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-
-FAÇA:
-- DESLIGAR switch.d8598c0f4effd9848ca64cd9981f14f9
-FIM
-
-
-AUTOMACAO "Sala - desligar luzes NSPanel"
-MODO single
-
-QUANDO:
-- switch.b2b332adfb28616f2a8a705c922f6ead ESTA "on"
-
-SE:
-- HORARIO ENTRE 18:00:00 E 06:00:00
-
-FAÇA:
-- DESLIGAR switch.luzes_da_cozinha
-- DESLIGAR switch.luzes_da_sala
-- DESLIGAR switch.luzes_do_lavabo
-- DESLIGAR switch.cozinha_nichos_led_interruptor_1
-- DESLIGAR media_player.music_frame_2
-- DESLIGAR media_player.music_frame
-- DESLIGAR media_player.nestmini0550
-- DESLIGAR media_player.home_theater_2
-- DESLIGAR media_player.tx_nr5100
-FIM
-
-
-AUTOMACAO "Closet - movimento (Detectado)"
-MODO restart
-
-QUANDO:
-- sensor.timer_closet ESTA "active"
-- binary_sensor.1e1e192bce0cdc593a3e72dc6e996b46 ESTA "on"
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-
-FAÇA:
-- LIGAR timer.closet
-FIM
-
-
-AUTOMACAO "Closet - movimento (Ligar Luz)"
-MODO restart
-
-QUANDO:
-- sensor.timer_closet ESTA "active"
-- binary_sensor.1e1e192bce0cdc593a3e72dc6e996b46 ESTA "on"
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-- switch.bb97c45f407329aca067d3f274499a81 ESTA "off"
-- alarm_control_panel.37dc24654a788314bfb4de2e2c827fd0 ESTA "disarmed"
-
-FAÇA:
-- LIGAR switch.e6bd5f71286d23ea1c87b580aea4407c
-FIM
-
-
-AUTOMACAO "Closet - movimento (Ocioso)"
-MODO restart
-
-QUANDO:
-- sensor.timer_closet ESTA "idle"
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-
-FAÇA:
-- DESLIGAR switch.e6bd5f71286d23ea1c87b580aea4407c
-FIM
-
-
-AUTOMACAO "Lavabo - 3o botao interruptor (Liga)"
-MODO restart
-
-QUANDO:
-- switch.8aa7f9cf78ad1d62f4df88ca2360df73 ESTA "on"
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-
-FAÇA:
-- LIGAR switch.espelho_do_lavabo
-- LIGAR switch.sonoff_100200129d_2
-FIM
-
-
-AUTOMACAO "Lavabo - 3o botao interruptor (Desliga)"
-MODO restart
-
-QUANDO:
-- switch.8aa7f9cf78ad1d62f4df88ca2360df73 ESTA "off"
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-
-FAÇA:
-- DESLIGAR switch.sonoff_100200129d_3
-- DESLIGAR switch.sonoff_100200129d_2
-- DESLIGAR switch.sonoff_100200129d_1
-- DESLIGAR switch.espelho_do_lavabo
-FIM
-
-
-AUTOMACAO "Suite - botao Dani (Single Liga)"
-MODO single
-
-QUANDO:
-- sensor.sonoff_a440016554 ESTA "single"
-
-SE:
-- switch.luzes_da_suite ESTA "off"
-
-FAÇA:
-- LIGAR light.arandela_suite
-FIM
-
-
-AUTOMACAO "Suite - botao Dani (Single Desliga)"
-MODO single
-
-QUANDO:
-- sensor.sonoff_a440016554 ESTA "single"
-
-SE:
-- switch.luzes_da_suite ESTA "on"
-
-FAÇA:
-- DESLIGAR switch.luzes_da_nicole
-- DESLIGAR switch.luzes_do_eric
-- DESLIGAR switch.sonoff_10018dee48_1
-- DESLIGAR switch.luzes_da_suite
-- LIGAR switch.bb97c45f407329aca067d3f274499a81
-- DESLIGAR timer.quarto_eric
-- DESLIGAR timer.corredor
-- DESLIGAR timer.quarto_nicole
-- DESLIGAR timer.closet
-- DESLIGAR timer.banho_nicole
-- DESLIGAR light.fita_led_rgb_5m
-FIM
-
-
-AUTOMACAO "Suite - botao Dani (Double)"
-MODO single
-
-QUANDO:
-- sensor.sonoff_a440016554 ESTA "double"
-
-FAÇA:
-- DESLIGAR switch.luzes_da_suite
-FIM
-
-
-AUTOMACAO "Sala - NSPanel controla painel LED TV (Liga)"
-MODO single
-
-QUANDO:
-- switch.2a3fe028eb0da3f11e73437fe3b34b5d ESTA "on"
-
-SE:
-- alarm_control_panel.37dc24654a788314bfb4de2e2c827fd0 ESTA "disarmed"
-
-FAÇA:
-- LIGAR switch.sonoff_1001e0dd5a_1
-FIM
-
-
-AUTOMACAO "Sala - NSPanel controla painel LED TV (Desliga)"
-MODO single
-
-QUANDO:
-- switch.2a3fe028eb0da3f11e73437fe3b34b5d ESTA "off"
-
-SE:
-- alarm_control_panel.37dc24654a788314bfb4de2e2c827fd0 ESTA "disarmed"
-
-FAÇA:
-- DESLIGAR switch.sonoff_1001e0dd5a_1
-FIM
-
-
-AUTOMACAO "Sala - movimento noturno"
-MODO single
-
-QUANDO:
-- binary_sensor.9b6b660ce19b4b6c1d36e0534e94f51c ESTA "on"
-- binary_sensor.5e8d44a8bf2542a3a9c249de1dcaff20 ESTA "on"
-
-SE:
-- switch.luzes_da_cozinha ESTA "off"
-- switch.luzes_da_sala ESTA "off"
-- HORARIO ENTRE 01:00:00 E 06:30:00
-- media_player.eea259ec8e8a95d09dd5c7d8619d1658 ESTA "off"
-- switch.bb97c45f407329aca067d3f274499a81 ESTA "on"
-
-FAÇA:
-- LIGAR switch.ilha_interruptor_1
-- ESPERAR 4min
-- DESLIGAR switch.ilha_interruptor_1
-- DESLIGAR switch.sonoff_1001887e06_2
-FIM
-
-
-AUTOMACAO "Corredor - chave hotel (Tuya OFF)"
-MODO single
-
-QUANDO:
-- switch.73bd5ca47e3ec3a9bc6a463e0ae0dc98 ESTA "off"
-
-FAÇA:
-- DESLIGAR switch.dac219311283b7d5262d710d8f61b278
-FIM
-
-
-AUTOMACAO "Corredor - chave hotel (Tuya ON)"
-MODO single
-
-QUANDO:
-- switch.73bd5ca47e3ec3a9bc6a463e0ae0dc98 ESTA "on"
-
-FAÇA:
-- LIGAR switch.dac219311283b7d5262d710d8f61b278
-FIM
-
-
-AUTOMACAO "Corredor - chave hotel (Sonoff OFF)"
-MODO single
-
-QUANDO:
-- switch.dac219311283b7d5262d710d8f61b278 ESTA "off"
-
-FAÇA:
-- DESLIGAR switch.73bd5ca47e3ec3a9bc6a463e0ae0dc98
-FIM
-
-
-AUTOMACAO "Corredor - chave hotel (Sonoff ON)"
-MODO single
-
-QUANDO:
-- switch.dac219311283b7d5262d710d8f61b278 ESTA "on"
-
-FAÇA:
-- LIGAR switch.73bd5ca47e3ec3a9bc6a463e0ae0dc98
-FIM
-
-
-AUTOMACAO "Suite - ligar toalheiro"
-MODO single
-
-QUANDO:
-- switch.57b28338c5ca8de7d7763d4539ce4e07 ESTA "on"
-- switch.f3669be2d38feb3b98c2d8c46ff1b0c6 ESTA "on"
-
-SE:
-- HORARIO ENTRE 15:00:00 E 23:59:00
-
-FAÇA:
-- LIGAR switch.5e57f3722928049f33c44caf233138cd
-- ESPERAR 35min
-- DESLIGAR switch.5e57f3722928049f33c44caf233138cd
-FIM
-
-
-AUTOMACAO "Nicole - movimento (Detectado Start)"
-MODO restart
-
-QUANDO:
-- binary_sensor.tze200_3towulqd_ts0601_ocupacao ESTA "on"
-
-SE:
-- alarm_control_panel.alarmo ESTA "disarmed"
-
-FAÇA:
-- LIGAR timer.quarto_nicole
-FIM
-
-
-AUTOMACAO "Sala - desligar LED sanca"
-MODO single
-
-QUANDO:
-- HORARIO ENTRE 05:00:00 E 05:01:00
-
-FAÇA:
-- DESLIGAR light.973148b62067d63a345f9c1cd90436fb
-FIM
-
-
-AUTOMACAO "Cozinha - desligar luzes"
-MODO single
-
-QUANDO:
-- sensor.evento ESTA "manual"
-
-FAÇA:
-- DESLIGAR light.d51d48f52a856d2a87a080b71d23ff20
-- DESLIGAR light.07ee905d710ace9fac2d8121924bcd15
-- DESLIGAR switch.976f5231d4889cf3165bc14dc157bbef
-- DESLIGAR light.f3e4348b0f9c6ea0e601151a41f13e8e
-- DESLIGAR switch.be630987e593594bf93e47138507f2f1
-- DESLIGAR light.f3bc1ca66e44276249fe6e63bf0ef281
-- DESLIGAR switch.c6be082d1cb3b4d93d99cdda332086f9
-- DESLIGAR switch.2a3fe028eb0da3f11e73437fe3b34b5d
-FIM
-
-
-AUTOMACAO "Suite - cortinas (Abrir)"
-MODO single
-
-QUANDO:
-- HORARIO ENTRE 22:30:00 E 22:31:00
-
-SE:
-- alarm_control_panel.37dc24654a788314bfb4de2e2c827fd0 ESTA "disarmed"
-
-FAÇA:
-- LIGAR cover.8e38e2f9b76939a6c380fad9428f1fd0
-FIM
-
-
-AUTOMACAO "Suite - cortinas (Fechar)"
-MODO single
-
-QUANDO:
-- HORARIO ENTRE 12:30:00 E 12:31:00
-
-SE:
-- alarm_control_panel.37dc24654a788314bfb4de2e2c827fd0 ESTA "disarmed"
-
-FAÇA:
-- DESLIGAR cover.8e38e2f9b76939a6c380fad9428f1fd0
-FIM
-
-
-AUTOMACAO "Suite - escova Oral-B (Idle)"
-MODO single
-
-QUANDO:
-- sensor.triumph_v2_90f2 ESTA "idle"
-
-FAÇA:
-- DESLIGAR light.1f44a726233f4ea71a519484b6d6e1da
-FIM
-
-
-AUTOMACAO "Suite - escova Oral-B (Running)"
-MODO single
-
-QUANDO:
-- sensor.triumph_v2_90f2 ESTA "running"
-
-FAÇA:
-- LIGAR light.1f44a726233f4ea71a519484b6d6e1da
 FIM
